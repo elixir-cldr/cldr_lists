@@ -3,19 +3,19 @@ defmodule Cldr.List.Test do
   alias Cldr.List
 
   test "that three element lists format correctly" do
-    assert List.to_string([1,2,3]) == "1, 2, and 3"
+    assert List.to_string([1,2,3]) == {:ok, "1, 2, and 3"}
   end
 
   test "that two element lists format correctly" do
-    assert List.to_string([1,2]) == "1 and 2"
+    assert List.to_string([1,2]) == {:ok, "1 and 2"}
   end
 
   test "that one element lists format correctly" do
-    assert List.to_string([1]) == "1"
+    assert List.to_string([1]) == {:ok, "1"}
   end
 
   test "that empty lists format correctly" do
-    assert List.to_string([]) == ""
+    assert List.to_string([]) == {:ok, ""}
   end
 
   test "a bad format returns an error" do

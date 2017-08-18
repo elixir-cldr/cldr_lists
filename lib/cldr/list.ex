@@ -7,7 +7,7 @@ defmodule Cldr.List do
   then we can format that list for a given locale by:
 
       iex> Cldr.List.to_string(["Monday", "Tuesday", "Wednesday"], locale: "en")
-      "Monday, Tuesday, and Wednesday"
+      {:ok, "Monday, Tuesday, and Wednesday"}
   """
 
   require Cldr
@@ -32,27 +32,27 @@ defmodule Cldr.List do
   ## Examples
 
       iex> Cldr.List.to_string(["a", "b", "c"], locale: "en")
-      "a, b, and c"
+      {:ok, "a, b, and c"}
 
       iex> Cldr.List.to_string(["a", "b", "c"], locale: "en", format: :unit_narrow)
-      "a b c"
+      {:ok, "a b c"}
 
       iex> Cldr.List.to_string(["a", "b", "c"], locale: "fr")
-      "a, b et c"
+      {:ok, "a, b et c"}
 
       iex> Cldr.List.to_string([1,2,3,4,5,6])
-      "1, 2, 3, 4, 5, and 6"
+      {:ok, "1, 2, 3, 4, 5, and 6"}
 
       iex> Cldr.List.to_string(["a"])
-      "a"
+      {:ok, "a"}
 
       iex> Cldr.List.to_string([1,2])
-      "1 and 2"
+      {:ok, "1 and 2"}
   """
-  @spec to_string(List.t, Keyword.t) :: String.t
+  @spec to_string(List.t, Keyword.t) :: {:ok, String.t} | {:error, {atom, binary}}
   def to_string(list, options \\ [])
   def to_string([], _options) do
-    ""
+    {:ok, ""}
   end
 
   def to_string(list, options) do
@@ -60,21 +60,28 @@ defmodule Cldr.List do
       {:error, {_exception, _message}} = error ->
         error
       {locale, format} ->
-        to_string(list, locale, format)
-        |> :erlang.iolist_to_binary
+        {:ok, :erlang.iolist_to_binary(to_string(list, locale, format))}
     end
   end
 
   @doc """
   Formats a list using `to_string/2` but raises if there is
   an error.
+
+  ## Examples
+
+      iex> Cldr.List.to_string!(["a", "b", "c"], locale: "en")
+      "a, b, and c"
+
+      iex> Cldr.List.to_string!(["a", "b", "c"], locale: "en", format: :unit_narrow)
+      "a b c"
   """
   @spec to_string!(List.t, Keyword.t) :: String.t | Exception.t
   def to_string!(list, options \\ []) do
-    case string = to_string(list, options) do
+    case to_string(list, options) do
       {:error, {exception, message}} ->
         raise exception, message
-      _ ->
+      {:ok, string} ->
         string
     end
   end
