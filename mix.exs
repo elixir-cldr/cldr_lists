@@ -19,8 +19,8 @@ defmodule CldrLists.Mixfile do
 
   defp description do
     """
-    List formatting functions for Common Locale Data Repository (CLDR).
-    (ex_cldr)[https://hex.pm/packages/ex_cldr] is a dependency.
+    List formatting functions for the Common Locale Data Repository (CLDR)
+    package ex_cldr
     """
   end
 
