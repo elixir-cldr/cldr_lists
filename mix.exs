@@ -34,7 +34,7 @@ defmodule CldrLists.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:ex_cldr, path: "../cldr"}
+      {:ex_cldr, "~> 0.5.0"}
     ]
   end
 
