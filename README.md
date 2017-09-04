@@ -1,4 +1,4 @@
-# Elixir Cldr for Lists
+# Cldr for Lists
 ![Build Status](http://sweatbox.noexpectations.com.au:8080/buildStatus/icon?job=cldr_lists)
 ![Deps Status](https://beta.hexfaktor.org/badge/all/github/kipcole9/cldr_lists.svg)
 [![Hex pm](http://img.shields.io/hexpm/v/ex_cldr_lists.svg?style=flat)](https://hex.pm/packages/ex_cldr_lists)
