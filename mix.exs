@@ -7,6 +7,7 @@ defmodule CldrLists.Mixfile do
     [
       app: :ex_cldr_lists,
       version: @version,
+      docs: docs(),
       elixir: "~> 1.5",
       name: "Cldr_Lists",
       source_url: "https://github.com/kipcole9/cldr_lists",
@@ -47,6 +48,14 @@ defmodule CldrLists.Mixfile do
       files: [
         "lib", "config", "mix.exs", "README*", "CHANGELOG*", "LICENSE*"
       ]
+    ]
+  end
+
+  def docs do
+    [
+      source_ref: "v#{@version}",
+      main: "README",
+      extras: ["README.md", "CHANGELOG.md"]
     ]
   end
 
