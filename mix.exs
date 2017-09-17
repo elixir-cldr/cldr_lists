@@ -1,7 +1,7 @@
 defmodule CldrLists.Mixfile do
   use Mix.Project
 
-  @version "0.1.2"
+  @version "0.1.3"
 
   def project do
     [
@@ -35,7 +35,8 @@ defmodule CldrLists.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:ex_cldr, "~> 0.6.2"},
+      {:ex_cldr, "~> 0.7.0"},
+      {:ex_cldr_numbers, "~> 0.1.0"},
       {:ex_doc, ">= 0.0.0", only: :dev}
     ]
   end
