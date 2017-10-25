@@ -98,7 +98,7 @@ defmodule Cldr.List do
 
   # For when there are two elements only
   defp to_string([first, last], locale, pattern_type) do
-    pattern = list_patterns_for(locale)[pattern_type][:"2"]
+    pattern = list_patterns_for(locale.cldr_locale_name)[pattern_type][:"2"]
 
     Substitution.substitute([first, last], pattern)
     |> :erlang.iolist_to_binary
@@ -106,8 +106,8 @@ defmodule Cldr.List do
 
   # For when there are three elements only
   defp to_string([first, middle, last], locale, pattern_type) do
-    first_pattern = list_patterns_for(locale)[pattern_type][:start]
-    last_pattern = list_patterns_for(locale)[pattern_type][:end]
+    first_pattern = list_patterns_for(locale.cldr_locale_name)[pattern_type][:start]
+    last_pattern = list_patterns_for(locale.cldr_locale_name)[pattern_type][:end]
 
     last = Substitution.substitute([middle, last], last_pattern)
     Substitution.substitute([first, last], first_pattern)
@@ -115,29 +115,29 @@ defmodule Cldr.List do
 
   # For when there are more than 3 elements
   defp to_string([first | rest], locale, pattern_type) do
-    first_pattern = list_patterns_for(locale)[pattern_type][:start]
+    first_pattern = list_patterns_for(locale.cldr_locale_name)[pattern_type][:start]
 
     Substitution.substitute([first, do_to_string(rest, locale, pattern_type)], first_pattern)
   end
 
   # When there are only two left (ie last)
   defp do_to_string([first, last], locale, pattern_type) do
-    last_pattern = list_patterns_for(locale)[pattern_type][:end]
+    last_pattern = list_patterns_for(locale.cldr_locale_name)[pattern_type][:end]
 
     Substitution.substitute([first, last], last_pattern)
   end
 
   # For the middle elements
   defp do_to_string([first | rest], locale, pattern_type) do
-    middle_pattern = list_patterns_for(locale)[pattern_type][:middle]
+    middle_pattern = list_patterns_for(locale.cldr_locale_name)[pattern_type][:middle]
 
     Substitution.substitute([first, do_to_string(rest, locale, pattern_type)], middle_pattern)
   end
 
   @spec list_patterns_for(Cldr.locale) :: Map.t
   @spec list_pattern_styles_for(Cldr.locale) :: [atom]
-  for locale <- Cldr.known_locales do
-    patterns = Cldr.Config.get_locale(locale).list_formats
+  for locale_name <- Cldr.known_locales do
+    patterns = Cldr.Config.get_locale(locale_name).list_formats
     pattern_names = Map.keys(patterns)
 
     @doc """
@@ -159,8 +159,9 @@ defmodule Cldr.List do
            middle: [0, " ", 1], start: [0, " ", 1]},
          unit_short: %{"2": [0, ", ", 1], end: [0, ", ", 1],
            middle: [0, ", ", 1], start: [0, ", ", 1]}}
+
     """
-    def list_patterns_for(unquote(locale)) do
+    def list_patterns_for(unquote(locale_name)) do
       unquote(Macro.escape(patterns))
     end
 
@@ -175,7 +176,7 @@ defmodule Cldr.List do
         iex> Cldr.List.list_pattern_styles_for("en")
         [:standard, :standard_short, :unit, :unit_narrow, :unit_short]
     """
-    def list_pattern_styles_for(unquote(locale)) do
+    def list_pattern_styles_for(unquote(locale_name)) do
       unquote(pattern_names)
     end
   end
@@ -184,8 +185,9 @@ defmodule Cldr.List do
     locale = options[:locale] || Cldr.get_current_locale()
     format = options[:format] || @default_style
 
-    with {:ok, _} <- Cldr.valid_locale?(locale),
-         :ok <- verify_format(locale, format)
+    with \
+      {:ok, locale} <- Cldr.validate_locale(locale),
+      {:ok, _} <- verify_format(locale.cldr_locale_name, format)
     do
       {locale, format}
     else
@@ -193,11 +195,11 @@ defmodule Cldr.List do
     end
   end
 
-  defp verify_format(locale, format) do
-    if !(format in list_pattern_styles_for(locale)) do
+  defp verify_format(locale_name, format) do
+    if !(format in list_pattern_styles_for(locale_name)) do
       {:error, {Cldr.UnknownFormatError, "The list format style #{inspect format} is not known."}}
     else
-      :ok
+      {:ok, format}
     end
   end
 end
