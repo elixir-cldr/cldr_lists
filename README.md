@@ -33,7 +33,7 @@ Add `ex_cldr_dates_time` as a dependency to your `mix` project:
 
     defp deps do
       [
-        {:ex_cldr_lists, "~> 0.2.1"}
+        {:ex_cldr_lists, "~> 0.2.2"}
       ]
     end
 

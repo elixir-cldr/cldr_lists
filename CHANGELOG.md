@@ -1,5 +1,11 @@
 # Changelog
 
+## Cldr_Lists v0.2.2 November 1st, 2017
+
+### Enhancements
+
+* Update to ex_cldr v0.9.0
+
 ## Cldr_Lists v0.2.1 October 30th, 2017
 
 ### Enhancements
