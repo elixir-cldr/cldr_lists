@@ -11,8 +11,20 @@
 The primary api is `Cldr.List.to_string/2`.  The following examples demonstrate:
 
 ```elixir
+iex> Cldr.List.list_pattern_styles_for "en"
+[:or, :standard, :standard_short, :unit, :unit_narrow, :unit_short]
+
 iex> Cldr.List.to_string(["a", "b", "c"], locale: "en")
 {:ok, "a, b, and c"}
+
+iex> Cldr.List.to_string(["a", "b", "c"], locale: "en", format: :or)
+{:ok, "a, b, or c"}
+
+iex> Cldr.List.to_string(["a", "b", "c"], locale: "en", format: :unit)
+{:ok, "a, b, c"}
+
+iex> Cldr.List.to_string!(["a", "b", "c"], locale: "en", format: :unit)
+"a, b, c"
 ```
 
 For help in `iex`:
@@ -33,7 +45,7 @@ Add `ex_cldr_dates_time` as a dependency to your `mix` project:
 
     defp deps do
       [
-        {:ex_cldr_lists, "~> 0.2.2"}
+        {:ex_cldr_lists, "~> 0.3.0"}
       ]
     end
 
