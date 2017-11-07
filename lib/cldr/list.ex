@@ -136,7 +136,7 @@ defmodule Cldr.List do
 
   @spec list_patterns_for(Cldr.locale) :: Map.t
   @spec list_pattern_styles_for(Cldr.locale) :: [atom]
-  for locale_name <- Cldr.known_locales do
+  for locale_name <- Cldr.known_locale_names do
     patterns = Cldr.Config.get_locale(locale_name).list_formats
     pattern_names = Map.keys(patterns)
 

@@ -35,8 +35,8 @@ defmodule CldrLists.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:ex_cldr, "~> 0.11.0"},
-      {:ex_cldr_numbers, "~> 0.3.1"},
+      {:ex_cldr, path: "../cldr"},
+      {:ex_cldr_numbers, path: "../cldr_numbers"},
       {:ex_doc, ">= 0.18.1", only: :dev}
     ]
   end
