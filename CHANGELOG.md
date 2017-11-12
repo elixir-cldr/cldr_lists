@@ -1,5 +1,11 @@
 # Changelog
 
+## Cldr_Lists v0.3.3 November 13th, 2017
+
+### Enhancements
+
+* Update to [ex_cldr](https://hex.pm/packages/ex_cldr) version 0.13.0
+
 ## Cldr_Lists v0.3.2 November 8th, 2017
 
 ### Enhancements
