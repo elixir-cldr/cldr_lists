@@ -1,7 +1,7 @@
 defmodule CldrLists.Mixfile do
   use Mix.Project
 
-  @version "0.3.3"
+  @version "1.0.0-rc.0"
 
   def project do
     [
@@ -35,8 +35,8 @@ defmodule CldrLists.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:ex_cldr, "~> 0.13"},
-      {:ex_cldr_numbers, "~> 0.3"},
+      {:ex_cldr, "~> 1.0.0-rc or ~> 1.0"},
+      {:ex_cldr_numbers, "~> 1.0.0-rc or ~> 1.0"},
       {:ex_doc, ">= 0.18.1", only: :dev}
     ]
   end
@@ -56,14 +56,13 @@ defmodule CldrLists.Mixfile do
     [
       source_ref: "v#{@version}",
       main: "readme",
-      extras: ["README.md", "CHANGELOG.md"]
+      extras: ["README.md", "CHANGELOG.md", "LICENSE.md"]
     ]
   end
 
   def links do
     %{
       "GitHub"    => "https://github.com/kipcole9/cldr_lists",
-      "Readme"    => "https://github.com/kipcole9/cldr_lists/blob/v#{@version}/README.md",
       "Changelog" => "https://github.com/kipcole9/cldr_lists/blob/v#{@version}/CHANGELOG.md"
     }
   end
