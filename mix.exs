@@ -9,7 +9,7 @@ defmodule CldrLists.Mixfile do
       version: @version,
       docs: docs(),
       elixir: "~> 1.5",
-      name: "Cldr_Lists",
+      name: "Cldr Lists",
       source_url: "https://github.com/kipcole9/cldr_lists",
       description: description(),
       package: package(),
@@ -56,7 +56,8 @@ defmodule CldrLists.Mixfile do
     [
       source_ref: "v#{@version}",
       main: "readme",
-      extras: ["README.md", "CHANGELOG.md", "LICENSE.md"]
+      extras: ["README.md", "CHANGELOG.md", "LICENSE.md"],
+      logo: "logo.png"
     ]
   end
 
