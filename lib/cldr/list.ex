@@ -150,43 +150,61 @@ defmodule Cldr.List do
 
         iex> Cldr.List.list_patterns_for "en"
         %{
-           or: %{
-             "2": [0, " or ", 1],
-             end: [0, ", or ", 1],
-             middle: [0, ", ", 1],
-             start: [0, ", ", 1]
-           },
-           standard: %{
-             "2": [0, " and ", 1],
-             end: [0, ", and ", 1],
-             middle: [0, ", ", 1],
-             start: [0, ", ", 1]
-           },
-           standard_short: %{
-             "2": [0, " and ", 1],
-             end: [0, ", and ", 1],
-             middle: [0, ", ", 1],
-             start: [0, ", ", 1]
-           },
-           unit: %{
-             "2": [0, ", ", 1],
-             end: [0, ", ", 1],
-             middle: [0, ", ", 1],
-             start: [0, ", ", 1]
-           },
-           unit_narrow: %{
-             "2": [0, " ", 1],
-             end: [0, " ", 1],
-             middle: [0, " ", 1],
-             start: [0, " ", 1]
-           },
-           unit_short: %{
-             "2": [0, ", ", 1],
-             end: [0, ", ", 1],
-             middle: [0, ", ", 1],
-             start: [0, ", ", 1]
-           }
-         }
+          or: %{
+            "2": [0, " or ", 1],
+            end: [0, ", or ", 1],
+            middle: [0, ", ", 1],
+            start: [0, ", ", 1]
+          },
+          or_narrow: %{
+            "2": [0, " or ", 1],
+            end: [0, ", or ", 1],
+            middle: [0, ", ", 1],
+            start: [0, ", ", 1]
+          },
+          or_short: %{
+            "2": [0, " or ", 1],
+            end: [0, ", or ", 1],
+            middle: [0, ", ", 1],
+            start: [0, ", ", 1]
+          },
+          standard: %{
+            "2": [0, " and ", 1],
+            end: [0, ", and ", 1],
+            middle: [0, ", ", 1],
+            start: [0, ", ", 1]
+          },
+          standard_narrow: %{
+            "2": [0, " and ", 1],
+            end: [0, ", and ", 1],
+            middle: [0, ", ", 1],
+            start: [0, ", ", 1]
+          },
+          standard_short: %{
+            "2": [0, " and ", 1],
+            end: [0, ", and ", 1],
+            middle: [0, ", ", 1],
+            start: [0, ", ", 1]
+          },
+          unit: %{
+            "2": [0, ", ", 1],
+            end: [0, ", ", 1],
+            middle: [0, ", ", 1],
+            start: [0, ", ", 1]
+          },
+          unit_narrow: %{
+            "2": [0, " ", 1],
+            end: [0, " ", 1],
+            middle: [0, " ", 1],
+            start: [0, " ", 1]
+          },
+          unit_short: %{
+            "2": [0, ", ", 1],
+            end: [0, ", ", 1],
+            middle: [0, ", ", 1],
+            start: [0, ", ", 1]
+          }
+        }
 
     """
     def list_patterns_for(unquote(locale_name)) do
@@ -202,7 +220,7 @@ defmodule Cldr.List do
     ## Example
 
         iex> Cldr.List.list_pattern_styles_for("en")
-        [:or, :standard, :standard_short, :unit, :unit_narrow, :unit_short]
+        [:or, :or_narrow, :or_short, :standard, :standard_narrow, :standard_short, :unit, :unit_narrow, :unit_short]
 
     """
     def list_pattern_styles_for(unquote(locale_name)) do
