@@ -10,4 +10,5 @@ This is the changelog for Cldr_lists v2.0.0-rc.0 released on ______, 2018.  For 
 ### To do before final release
 
 * Add tests for the new list formats in CLDR 34
+* Refactor `Cldr.List.intersperse/3`
 

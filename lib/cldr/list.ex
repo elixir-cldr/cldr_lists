@@ -8,26 +8,31 @@ defmodule Cldr.List do
 
       iex> Cldr.List.to_string(["Monday", "Tuesday", "Wednesday"], locale: "en")
       {:ok, "Monday, Tuesday, and Wednesday"}
+
   """
 
   require Cldr
   alias Cldr.Substitution
+  import Kernel, except: [to_string: 1]
 
-  @type string_list :: list(String.Chars.t())
   @type pattern_type :: :or | :standard | :unit | :unit_narrow | :unit_short
   @default_style :standard
 
   @doc """
   Formats a list into a string according to the list pattern rules for a locale.
 
+  ## Arguments
+
   * `list` is any list of of terms that can be passed through `Kernel.to_string/1`
 
-  * `options` are:
+  * `options` is a keyword list
 
-    * `locale` is any configured locale. See `Cldr.known_locales()`. The default
+  ## Options
+
+  * `locale` is any configured locale. See `Cldr.known_locales()`. The default
     is `locale: Cldr.get_current_locale/0`
 
-    * `format` is one of those returned by
+  * `format` is one of those returned by
     `Cldr.List.list_pattern_types_for/1`. The default is `format: :standard`
 
   ## Examples
@@ -49,22 +54,19 @@ defmodule Cldr.List do
 
       iex> Cldr.List.to_string([1,2])
       {:ok, "1 and 2"}
+
   """
-  @spec to_string(Cldr.List.string_list(), Keyword.t()) ::
+  @spec to_string([term(), ...], Keyword.t()) ::
           {:ok, String.t()} | {:error, {atom, binary}}
-  def to_string(list, options \\ [])
 
-  def to_string([], _options) do
-    {:ok, ""}
-  end
+  def to_string(list, options \\ []) do
+    with {:ok, list} <- intersperse(list, options) do
+      string =
+        list
+        |> Enum.map(&to_string/1)
+        |> :erlang.iolist_to_binary
 
-  def to_string(list, options) do
-    case normalize_options(options) do
-      {:error, {_exception, _message}} = error ->
-        error
-
-      {locale, format} ->
-        {:ok, :erlang.iolist_to_binary(to_string(list, locale, format))}
+      {:ok, string}
     end
   end
 
@@ -79,8 +81,9 @@ defmodule Cldr.List do
 
       iex> Cldr.List.to_string!(["a", "b", "c"], locale: "en", format: :unit_narrow)
       "a b c"
+
   """
-  @spec to_string!(Cldr.List.string_list(), Keyword.t()) :: String.t() | Exception.t()
+  @spec to_string!([term(), ...], Keyword.t()) :: String.t() | Exception.t()
   def to_string!(list, options \\ []) do
     case to_string(list, options) do
       {:error, {exception, message}} ->
@@ -91,88 +94,48 @@ defmodule Cldr.List do
     end
   end
 
-  # For when the list is empty
-  defp to_string([], _locale, _pattern_type) do
-    ""
-  end
-
-  # For when there is one element only
-  defp to_string([first], _locale, _pattern_type) do
-    Kernel.to_string(first)
-  end
-
-  # For when there are two elements only
-  defp to_string([first, last], locale, pattern_type) do
-    pattern = list_patterns_for(locale.cldr_locale_name)[pattern_type][:"2"]
-
-    Substitution.substitute([first, last], pattern)
-    |> :erlang.iolist_to_binary()
-  end
-
-  # For when there are three elements only
-  defp to_string([first, middle, last], locale, pattern_type) do
-    first_pattern = list_patterns_for(locale.cldr_locale_name)[pattern_type][:start]
-    last_pattern = list_patterns_for(locale.cldr_locale_name)[pattern_type][:end]
-
-    last = Substitution.substitute([middle, last], last_pattern)
-    Substitution.substitute([first, last], first_pattern)
-  end
-
-  # For when there are more than 3 elements
-  defp to_string([first | rest], locale, pattern_type) do
-    first_pattern = list_patterns_for(locale.cldr_locale_name)[pattern_type][:start]
-
-    Substitution.substitute([first, do_to_string(rest, locale, pattern_type)], first_pattern)
-  end
-
-  # When there are only two left (ie last)
-  defp do_to_string([first, last], locale, pattern_type) do
-    last_pattern = list_patterns_for(locale.cldr_locale_name)[pattern_type][:end]
-
-    Substitution.substitute([first, last], last_pattern)
-  end
-
-  # For the middle elements
-  defp do_to_string([first | rest], locale, pattern_type) do
-    middle_pattern = list_patterns_for(locale.cldr_locale_name)[pattern_type][:middle]
-
-    Substitution.substitute([first, do_to_string(rest, locale, pattern_type)], middle_pattern)
-  end
-
   @doc """
-  Formats a list into a string according to the list pattern rules for a locale.
+  Intersperces a list elements into a list format according to the list
+  pattern rules for a locale.
 
-  * `list` is any list
+  ## Arguments
 
-  * `options` are:
+  * `list` is any list of of terms that can be passed through `Kernel.to_string/1`
 
-    * `locale` is any configured locale. See `Cldr.known_locales()`. The default
+  * `options` is a keyword list
+
+  ## Options
+
+  * `locale` is any configured locale. See `Cldr.known_locales()`. The default
     is `locale: Cldr.get_current_locale/0`
 
-    * `format` is one of those returned by
+  * `format` is one of those returned by
     `Cldr.List.list_pattern_types_for/1`. The default is `format: :standard`
 
   ## Examples
 
-      iex> Cldr.List.intersperse(["a", 1, :ok], locale: "en")
-      {:ok, ["a", ", ", 1, ", and ", :ok]}
+      iex> Cldr.List.intersperse(["a", "b", "c"], locale: "en")
+      {:ok, ["a", ", ", "b, and c"]}
 
-      iex> Cldr.List.intersperse(["a", 1, :ok], locale: "en", format: :unit_narrow)
-      {:ok, ["a", " ", 1, " ", :ok]}
+      iex> Cldr.List.intersperse(["a", "b", "c"], locale: "en", format: :unit_narrow)
+      {:ok, ["a", " ", "b c"]}
 
-      iex> Cldr.List.intersperse(["a", 1, :ok], locale: "fr")
-      {:ok, ["a", ", ", 1, " et ", :ok]}
+      iex> Cldr.List.intersperse(["a", "b", "c"], locale: "fr")
+      {:ok, ["a", ", ", "b et c"]}
 
-      iex> Cldr.List.intersperse(["a", 1, 2, 3, :ok])
-      {:ok, ["a", ", ", 1, ", ", 2, ", ", 3, ", and ", :ok]}
+      iex> Cldr.List.intersperse([1,2,3,4,5,6])
+      {:ok, ["1", ", ", "2, 3, 4, 5, and 6"]}
 
       iex> Cldr.List.intersperse(["a"])
       {:ok, ["a"]}
 
-      iex> Cldr.List.intersperse(["a", 1])
-      {:ok, ["a", " and ", 1]}
+      iex> Cldr.List.intersperse([1,2])
+      {:ok, ["1", " and ", "2"]}
+
   """
-  @spec intersperse(list(), Keyword.t()) :: {:ok, list()} | {:error, {atom, binary}}
+  @spec intersperse([term(), ...], Keyword.t()) ::
+          {:ok, list()} | {:error, {atom, binary}}
+
   def intersperse(list, options \\ [])
 
   def intersperse([], _options) do
@@ -185,30 +148,7 @@ defmodule Cldr.List do
         error
 
       {locale, format} ->
-        {:ok, List.flatten(intersperse(list, locale, format))}
-    end
-  end
-
-  @doc """
-  Formats a list using `to_string/2` but raises if there is
-  an error.
-
-  ## Examples
-
-      iex> Cldr.List.intersperse!(["a", 1, :ok], locale: "en")
-      ["a", ", ", 1, ", and ", :ok]
-
-      iex> Cldr.List.intersperse!(["a", 1, :ok], locale: "en", format: :unit_narrow)
-      ["a", " ", 1, " ", :ok]
-  """
-  @spec intersperse!(list(), Keyword.t()) :: list | Exception.t()
-  def intersperse!(list, options \\ []) do
-    case intersperse(list, options) do
-      {:error, {exception, message}} ->
-        raise exception, message
-
-      {:ok, string} ->
-        string
+        {:ok, intersperse(list, locale, format)}
     end
   end
 
@@ -218,80 +158,64 @@ defmodule Cldr.List do
   end
 
   # For when there is one element only
-  defp intersperse([_] = list, _locale, _pattern_type) do
-    list
+  defp intersperse([first], _locale, _pattern_type) do
+    [first]
   end
 
   # For when there are two elements only
   defp intersperse([first, last], locale, pattern_type) do
     pattern = list_patterns_for(locale.cldr_locale_name)[pattern_type][:"2"]
-
-    list_substitute([first, last], pattern)
-    |> List.flatten()
+    Substitution.substitute([first, last], pattern)
   end
 
   # For when there are three elements only
   defp intersperse([first, middle, last], locale, pattern_type) do
     first_pattern = list_patterns_for(locale.cldr_locale_name)[pattern_type][:start]
     last_pattern = list_patterns_for(locale.cldr_locale_name)[pattern_type][:end]
-
-    last = list_substitute([middle, last], last_pattern)
-    list_substitute([first, last], first_pattern)
+    last = Substitution.substitute([middle, last], last_pattern)
+    Substitution.substitute([first, last], first_pattern)
   end
 
   # For when there are more than 3 elements
   defp intersperse([first | rest], locale, pattern_type) do
     first_pattern = list_patterns_for(locale.cldr_locale_name)[pattern_type][:start]
-
-    list_substitute([first, do_intersperse(rest, locale, pattern_type)], first_pattern)
+    Substitution.substitute([first, do_intersperse(rest, locale, pattern_type)], first_pattern)
   end
 
   # When there are only two left (ie last)
   defp do_intersperse([first, last], locale, pattern_type) do
     last_pattern = list_patterns_for(locale.cldr_locale_name)[pattern_type][:end]
-
-    list_substitute([first, last], last_pattern)
+    Substitution.substitute([first, last], last_pattern)
   end
 
   # For the middle elements
   defp do_intersperse([first | rest], locale, pattern_type) do
     middle_pattern = list_patterns_for(locale.cldr_locale_name)[pattern_type][:middle]
-
-    list_substitute([first, do_intersperse(rest, locale, pattern_type)], middle_pattern)
+    Substitution.substitute([first, do_intersperse(rest, locale, pattern_type)], middle_pattern)
   end
 
-  # Takes care of a common case where there is one parameter
-  def list_substitute([item], [0, string]) when is_binary(string) do
-    [item, string]
-  end
+  @doc """
+  Formats a list using `intersperse/2` but raises if there is
+  an error.
 
-  def list_substitute(item, [0, string]) when is_binary(string) do
-    [item, string]
-  end
+  ## Examples
 
-  def list_substitute(item, [string, 0]) when is_binary(string) do
-    [string, item]
-  end
+      iex> Cldr.List.intersperse!(["a", "b", "c"], locale: "en")
+      ["a", ", ", "b, and c"]
 
-  def list_substitute(item, [string1, 0, string2])
-      when is_binary(string1) and is_binary(string2) do
-    [string1, item, string2]
-  end
+      iex> Cldr.List.intersperse!(["a", "b", "c"], locale: "en", format: :unit_narrow)
+      ["a", " ", "b c"]
 
-  # Takes care of the common case where there are two parameters separated
-  # by a string.
-  def list_substitute([item_0, item_1], [0, string, 1]) when is_binary(string) do
-    [item_0, string, item_1]
-  end
+  """
+  @spec intersperse!([term(), ...], Keyword.t()) :: String.t() | no_return()
+  def intersperse!(list, options \\ []) do
+    case intersperse(list, options) do
+      {:error, {exception, message}} ->
+        raise exception, message
 
-  def list_substitute([item_0, item_1], [1, string, 0]) when is_binary(string) do
-    [item_1, string, item_0]
-  end
-
-  # Takes care of the common case where there are three parameters separated
-  # by strings.
-  def list_substitute([item_0, item_1, item_2], [0, string_1, 1, string_2, 2]) do
-    [item_0, string_1, item_1, string_2, item_2]
+      {:ok, string} ->
+        string
+    end
   end
 
   @spec list_patterns_for(Cldr.locale()) :: Map.t()
