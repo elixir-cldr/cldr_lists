@@ -1,7 +1,7 @@
 defmodule CldrLists.Mixfile do
   use Mix.Project
 
-  @version "2.0.0-rc.0"
+  @version "2.0.0"
 
   def project do
     [
@@ -14,7 +14,9 @@ defmodule CldrLists.Mixfile do
       description: description(),
       package: package(),
       start_permanent: Mix.env == :prod,
-      deps: deps()
+      deps: deps(),
+      elixirc_paths: elixirc_paths(Mix.env()),
+      cldr_provider: {Cldr.List.Backend, :define_list_module, []}
     ]
   end
 
@@ -35,10 +37,10 @@ defmodule CldrLists.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:ex_cldr, "~> 1.8"},
-      {:ex_cldr_numbers, "~> 1.6"},
-      {:ex_doc, "~> 0.18", only: :dev},
-      {:jason, "~> 1.0"}
+      {:ex_cldr, "~> 2.0"},
+      {:ex_cldr_numbers, "~> 2.0"},
+      {:ex_doc, "~> 0.18", only: [:release, :dev]},
+      {:jason, "~> 1.0", optional: true}
     ]
   end
 
@@ -65,8 +67,12 @@ defmodule CldrLists.Mixfile do
   def links do
     %{
       "GitHub"    => "https://github.com/kipcole9/cldr_lists",
+      "Readme"    => "https://github.com/kipcole9/cldr_lists/blob/v#{@version}/README.md",
       "Changelog" => "https://github.com/kipcole9/cldr_lists/blob/v#{@version}/CHANGELOG.md"
     }
   end
 
+  defp elixirc_paths(:test), do: ["lib", "mix", "test"]
+  defp elixirc_paths(:dev), do: ["lib", "mix"]
+  defp elixirc_paths(_), do: ["lib"]
 end
