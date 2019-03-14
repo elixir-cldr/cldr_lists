@@ -6,16 +6,19 @@ defmodule Cldr.List.Backend do
 
     quote location: :keep, bind_quoted: [module: module, backend: backend, config: config] do
       defmodule List do
-        @moduledoc """
-        Cldr backend module that formats lists.
+        @moduledoc false
+        if Cldr.Config.include_module_docs?(config.generate_docs) do
+          @moduledoc """
+          Cldr backend module that formats lists.
 
-        If we have a list of days like `["Monday", "Tuesday", "Wednesday"]`
-        then we can format that list for a given locale by:
+          If we have a list of days like `["Monday", "Tuesday", "Wednesday"]`
+          then we can format that list for a given locale by:
 
-            iex> #{inspect __MODULE__}.to_string(["Monday", "Tuesday", "Wednesday"], locale: "en")
-            {:ok, "Monday, Tuesday, and Wednesday"}
+              iex> #{inspect __MODULE__}.to_string(["Monday", "Tuesday", "Wednesday"], locale: "en")
+              {:ok, "Monday, Tuesday, and Wednesday"}
 
-        """
+          """
+        end
 
         @default_style :standard
         alias Cldr.Substitution
