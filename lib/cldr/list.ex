@@ -27,7 +27,7 @@ defmodule Cldr.List do
     is `locale: Cldr.get_current_locale/0`
 
   * `format` is one of those returned by
-    `Cldr.List.list_pattern_types_for/1`. The default is `format: :standard`
+    `Cldr.List.list_pattern_styles_for/2`. The default is `format: :standard`
 
   ## Examples
 
@@ -96,7 +96,7 @@ defmodule Cldr.List do
     is `locale: Cldr.get_current_locale/1`
 
   * `format` is atom returned by
-    `Cldr.List.list_pattern_types_for/2`. The default is `:standard`
+    `Cldr.List.list_pattern_styles_for/2`. The default is `:standard`
 
   ## Examples
 
