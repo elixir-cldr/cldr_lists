@@ -79,7 +79,7 @@ defmodule Cldr.List.Test do
       end
 
       assert "that module docs are generated for a backend" do
-        {:docs_v1, 1, :elixir, "text/markdown", _, %{}, _} = Code.fetch_docs(TestBackend.Cldr)
+        {:docs_v1, _, :elixir, "text/markdown", _, %{}, _} = Code.fetch_docs(TestBackend.Cldr)
       end
     end
   end

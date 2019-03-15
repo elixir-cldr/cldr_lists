@@ -1,3 +1,5 @@
+require Cldr.List.Backend
+
 defmodule TestBackend.Cldr do
   use Cldr,
     default_locale: "en",
