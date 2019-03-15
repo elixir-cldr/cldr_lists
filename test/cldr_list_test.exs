@@ -72,13 +72,15 @@ defmodule Cldr.List.Test do
     end
   end
 
-  describe "doc generation" do
-    test "that no module docs are generated for a backend" do
-      assert {:docs_v1, _, :elixir, _, :hidden, %{}, _} = Code.fetch_docs(NoDocs.Cldr)
-    end
+  if function_exported?(Code, :fetch_docs, 1) do
+    describe "doc generation" do
+      test "that no module docs are generated for a backend" do
+        assert {:docs_v1, _, :elixir, _, :hidden, %{}, _} = Code.fetch_docs(NoDocs.Cldr)
+      end
 
-    assert "that module docs are generated for a backend" do
-      {:docs_v1, 1, :elixir, "text/markdown", _, %{}, _} = Code.fetch_docs(TestBackend.Cldr)
+      assert "that module docs are generated for a backend" do
+        {:docs_v1, 1, :elixir, "text/markdown", _, %{}, _} = Code.fetch_docs(TestBackend.Cldr)
+      end
     end
   end
 end
