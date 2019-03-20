@@ -61,8 +61,8 @@ defmodule Cldr.List.Backend do
             {:ok, "1 and 2"}
 
         """
-        @spec to_string([term(), ...], Keyword.t()) ::
-                {:ok, String.t()} | {:error, {atom, binary}}
+        @spec to_string(list(term()), Keyword.t()) ::
+                {:ok, String.t()} | {:error, {module(), String.t()}}
 
         def to_string(list, options \\ []) do
           with {:ok, list} <- intersperse(list, options) do
@@ -88,7 +88,7 @@ defmodule Cldr.List.Backend do
             "a b c"
 
         """
-        @spec to_string!([term(), ...], Keyword.t()) :: String.t() | no_return()
+        @spec to_string!(list(term()), Keyword.t()) :: String.t() | no_return()
         def to_string!(list, options \\ []) do
           case to_string(list, options) do
             {:error, {exception, message}} ->
@@ -141,8 +141,8 @@ defmodule Cldr.List.Backend do
             {:ok, [1, " and ", 2]}
 
         """
-        @spec intersperse([term(), ...], Keyword.t()) ::
-                {:ok, list()} | {:error, {atom, binary}}
+        @spec intersperse(list(term()), Keyword.t()) ::
+                {:ok, list()} | {:error, {module(), String.t()}}
 
         def intersperse(list, options \\ [])
 
@@ -151,38 +151,34 @@ defmodule Cldr.List.Backend do
         end
 
         def intersperse(list, options) do
-          case normalize_options(options) do
-            {:error, {_exception, _message}} = error ->
-              error
+          with {:ok, locale, format} <- normalize_options(options) do
+            list =
+              list
+              |> intersperse(locale, format)
+              |> :'Elixir.List'.flatten
 
-            {locale, format} ->
-              list =
-                list
-                |> intersperse(locale, format)
-                |> :'Elixir.List'.flatten
-
-              {:ok, list}
+            {:ok, list}
           end
         end
 
         # For when the list is empty
-        defp intersperse([], _locale, _pattern_type) do
+        def intersperse([], _locale, _pattern_type) do
           []
         end
 
         # For when there is one element only
-        defp intersperse([first], _locale, _pattern_type) do
+        def intersperse([first], _locale, _pattern_type) do
           [first]
         end
 
         # For when there are two elements only
-        defp intersperse([first, last], locale, pattern_type) do
+        def intersperse([first, last], locale, pattern_type) do
           pattern = list_patterns_for(locale.cldr_locale_name)[pattern_type][:"2"]
           Substitution.substitute([first, last], pattern)
         end
 
         # For when there are three elements only
-        defp intersperse([first, middle, last], locale, pattern_type) do
+        def intersperse([first, middle, last], locale, pattern_type) do
           first_pattern = list_patterns_for(locale.cldr_locale_name)[pattern_type][:start]
           last_pattern = list_patterns_for(locale.cldr_locale_name)[pattern_type][:end]
           last = Substitution.substitute([middle, last], last_pattern)
@@ -190,21 +186,9 @@ defmodule Cldr.List.Backend do
         end
 
         # For when there are more than 3 elements
-        defp intersperse([first | rest], locale, pattern_type) do
+        def intersperse([first | rest], locale, pattern_type) do
           first_pattern = list_patterns_for(locale.cldr_locale_name)[pattern_type][:start]
-          Substitution.substitute([first, do_intersperse(rest, locale, pattern_type)], first_pattern)
-        end
-
-        # When there are only two left (ie last)
-        defp do_intersperse([first, last], locale, pattern_type) do
-          last_pattern = list_patterns_for(locale.cldr_locale_name)[pattern_type][:end]
-          Substitution.substitute([first, last], last_pattern)
-        end
-
-        # For the middle elements
-        defp do_intersperse([first | rest], locale, pattern_type) do
-          middle_pattern = list_patterns_for(locale.cldr_locale_name)[pattern_type][:middle]
-          Substitution.substitute([first, do_intersperse(rest, locale, pattern_type)], middle_pattern)
+          Substitution.substitute([first, intersperse(rest, locale, pattern_type)], first_pattern)
         end
 
         @doc """
@@ -220,16 +204,19 @@ defmodule Cldr.List.Backend do
             ["a", " ", "b", " ", "c"]
 
         """
-        @spec intersperse!([term(), ...], Keyword.t()) :: String.t() | no_return()
+        @spec intersperse!(list(term()), Keyword.t()) :: list(String.t()) | no_return()
         def intersperse!(list, options \\ []) do
           case intersperse(list, options) do
             {:error, {exception, message}} ->
               raise exception, message
 
-            {:ok, string} ->
-              string
+            {:ok, list} ->
+              list
           end
         end
+
+        @spec normalize_options(Keyword.t()) ::
+          {:ok, LanguageTag.t(), atom()} | {:error, {module(), String.t()}}
 
         defp normalize_options(options) do
           locale = options[:locale] || unquote(backend).get_locale()
@@ -237,23 +224,24 @@ defmodule Cldr.List.Backend do
 
           with {:ok, locale} <- unquote(backend).validate_locale(locale),
                {:ok, _} <- verify_format(locale.cldr_locale_name, format) do
-            {locale, format}
-          else
-            {:error, {_exception, _message}} = error -> error
+            {:ok, locale, format}
           end
         end
 
-        defp verify_format(locale_name, format) do
-          if !(format in list_pattern_styles_for(locale_name)) do
+        @spec verify_format(String.t(), atom()) ::
+          {:ok, atom()} | {:error, {module(), String.t()}}
+
+        def verify_format(locale_name, format) do
+          if format in list_pattern_styles_for(locale_name) do
+            {:ok, format}
+          else
             {:error,
              {Cldr.UnknownFormatError, "The list format style #{inspect(format)} is not known."}}
-          else
-            {:ok, format}
           end
         end
 
-        @spec list_patterns_for(Cldr.locale()) :: Map.t()
-        @spec list_pattern_styles_for(Cldr.locale()) :: [atom]
+        @spec list_patterns_for(Cldr.Locale.locale_name()) :: map()
+        @spec list_pattern_styles_for(Cldr.Locale.locale_name()) :: [atom]
 
         for locale_name <- Cldr.Config.known_locale_names(config) do
           patterns =

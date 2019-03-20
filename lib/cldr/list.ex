@@ -119,8 +119,8 @@ defmodule Cldr.List do
       {:ok, [1, " and ", 2]}
 
   """
-  @spec intersperse([term(), ...], Cldr.backend(), Keyword.t()) ::
-          {:ok, list()} | {:error, {atom, binary}}
+  @spec intersperse(list(term()), Cldr.backend(), Keyword.t()) ::
+          {:ok, list(String.t())} | {:error, {module(), String.t()}}
 
   def intersperse(list, backend, options \\ []) do
     module = Module.concat(backend, List)
@@ -140,7 +140,7 @@ defmodule Cldr.List do
       ["a", " ", "b", " ", "c"]
 
   """
-  @spec intersperse!([term(), ...], Cldr.backend(), Keyword.t()) :: String.t() | no_return()
+  @spec intersperse!(list(term()), Cldr.backend(), Keyword.t()) :: list(String.t()) | no_return()
   def intersperse!(list, backend, options \\ []) do
     module = Module.concat(backend, List)
     module.intersperse!(list, options)

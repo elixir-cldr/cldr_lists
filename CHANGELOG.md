@@ -1,3 +1,11 @@
+# Changelog for Cldr_Lists v2.0.2
+
+This is the changelog for Cldr_lists v2.0.2 released on March 20th, 2019.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
+
+### Bug Fixes
+
+* Fix dialyzer warnings
+
 # Changelog for Cldr_Lists v2.0.1
 
 This is the changelog for Cldr_lists v2.0.1 released on March 15th, 2019.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
