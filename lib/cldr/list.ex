@@ -24,7 +24,7 @@ defmodule Cldr.List do
   ## Options
 
   * `locale` is any configured locale. See `Cldr.known_locales()`. The default
-    is `locale: Cldr.get_current_locale/0`
+    is `locale: Cldr.get_locale/0`
 
   * `format` is one of those returned by
     `Cldr.List.list_pattern_styles_for/2`. The default is `format: :standard`
@@ -53,7 +53,14 @@ defmodule Cldr.List do
   @spec to_string([term(), ...], Cldr.backend(), Keyword.t()) ::
           {:ok, String.t()} | {:error, {atom, binary}}
 
-  def to_string(list, backend \\ Cldr.default_backend(), options \\ []) do
+  def to_string(list, backend \\ Cldr.default_backend(), options \\ [])
+  
+  def to_string(list, options, []) when is_list(options) do
+    {backend, options} = Keyword.pop(options, :backend, Cldr.default_backend())
+    to_string(list, backend, options)
+  end
+  
+  def to_string(list, backend, options) do
     module = Module.concat(backend, List)
     module.to_string(list, options)
   end
@@ -72,7 +79,15 @@ defmodule Cldr.List do
 
   """
   @spec to_string!([term(), ...], Cldr.backend(), Keyword.t()) :: String.t() | no_return()
-  def to_string!(list, backend \\ Cldr.default_backend(), options \\ []) do
+  
+  def to_string!(list, backend \\ Cldr.default_backend(), options \\ [])
+  
+  def to_string!(list, options, []) when is_list(options) do
+    {backend, options} = Keyword.pop(options, :backend, Cldr.default_backend())
+    to_string!(list, backend, options)
+  end
+  
+  def to_string!(list, backend, options) do
     module = Module.concat(backend, List)
     module.to_string!(list, options)
   end
@@ -93,7 +108,7 @@ defmodule Cldr.List do
   ## Options
 
   * `locale` is any configured locale. See `Cldr.known_locales()`. The default
-    is `locale: Cldr.get_current_locale/1`
+    is `locale: Cldr.get_locale/1`
 
   * `format` is atom returned by
     `Cldr.List.list_pattern_styles_for/2`. The default is `:standard`
