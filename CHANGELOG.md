@@ -1,6 +1,6 @@
 # Changelog for Cldr_Lists v2.2.1
 
-This is the changelog for Cldr_lists v2.2.1 released on ______, 2019.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
+This is the changelog for Cldr_lists v2.2.1 released on August 21st, 2019.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
 
 ### Bug Fixes
 
