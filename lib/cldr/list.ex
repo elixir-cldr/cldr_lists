@@ -50,16 +50,16 @@ defmodule Cldr.List do
       {:ok, "1 and 2"}
 
   """
-  @spec to_string([term(), ...], Cldr.backend(), Keyword.t()) ::
+  @spec to_string([term(), ...], Cldr.backend() | Keyword.t(), Keyword.t()) ::
           {:ok, String.t()} | {:error, {atom, binary}}
 
   def to_string(list, backend \\ Cldr.default_backend(), options \\ [])
-  
+
   def to_string(list, options, []) when is_list(options) do
     {backend, options} = Keyword.pop(options, :backend, Cldr.default_backend())
     to_string(list, backend, options)
   end
-  
+
   def to_string(list, backend, options) do
     module = Module.concat(backend, List)
     module.to_string(list, options)
@@ -78,15 +78,15 @@ defmodule Cldr.List do
       "a b c"
 
   """
-  @spec to_string!([term(), ...], Cldr.backend(), Keyword.t()) :: String.t() | no_return()
-  
+  @spec to_string!([term(), ...], Cldr.backend() | Keyword.t(), Keyword.t()) :: String.t() | no_return()
+
   def to_string!(list, backend \\ Cldr.default_backend(), options \\ [])
-  
+
   def to_string!(list, options, []) when is_list(options) do
     {backend, options} = Keyword.pop(options, :backend, Cldr.default_backend())
     to_string!(list, backend, options)
   end
-  
+
   def to_string!(list, backend, options) do
     module = Module.concat(backend, List)
     module.to_string!(list, options)
