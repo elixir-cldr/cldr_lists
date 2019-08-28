@@ -10,7 +10,8 @@ defmodule Cldr.List do
 
   """
 
-  @type pattern_type :: :or | :standard | :unit | :unit_narrow | :unit_short
+  @type pattern_type :: :or | :or_narrow | :or_short | :standard | :standard_narrow |
+                        :standard_short | :unit | :unit_narrow | :unit_short
 
   @doc """
   Formats a list into a string according to the list pattern rules for a locale.
@@ -249,5 +250,23 @@ defmodule Cldr.List do
   def list_pattern_styles_for(locale, backend \\ Cldr.default_backend()) do
     module = Module.concat(backend, List)
     module.list_pattern_styles_for(locale)
+  end
+
+  @doc """
+  Return the list of known list styles
+
+  ## Example
+
+      iex> Cldr.List.known_list_styles()
+      [:or, :or_narrow, :or_short, :standard, :standard_narrow,
+        :standard_short, :unit, :unit_narrow, :unit_short]
+
+  """
+
+  @known_list_styles Cldr.Config.get_locale("root", %Cldr.Config{locales: ["root"]})
+    |> Map.get(:list_formats) |> Map.keys
+
+  def known_list_styles do
+    @known_list_styles
   end
 end
