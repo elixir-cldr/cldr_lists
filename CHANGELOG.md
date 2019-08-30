@@ -4,7 +4,7 @@ This is the changelog for Cldr_lists v2.4.0 released on August 31st, 2019.  For 
 
 ### Changes and deprecations
 
-* Prefer the keyword option `:format` over `:style` to specify the list style in `Cldr.List.to_string/3` and `Cldr.List.intersperse/3`.  The keyword `:format` is deprecated and will be removed in `ex_cldr_lists` version 3.0
+* Prefer the keyword option `:style` over `:format` to specify the list style in `Cldr.List.to_string/3` and `Cldr.List.intersperse/3`.  The keyword `:format` is deprecated and will be removed in `ex_cldr_lists` version 3.0
 
 * Rename `Cldr.List.list_pattern_styles_for/2` to `Cldr.List.list_styles_for/2`. `Cldr.List.list_pattern_styles_for/2` will still operate and delegates to `Cldr.List.list_styles_for/2`.  It is now deprecated and will be removed in `ex_cldr_lists` 3.0.
 
