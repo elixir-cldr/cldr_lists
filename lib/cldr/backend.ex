@@ -34,11 +34,11 @@ defmodule Cldr.List.Backend do
 
         ## Options
 
-        * `locale` is any configured locale. See `Cldr.known_locales()`. The default
+        * `:locale` is any configured locale. See `Cldr.known_locales()`. The default
           is `locale: Cldr.get_locale/0`
 
-        * `format` is one of those returned by
-          `Cldr.List.list_pattern_types_for/1`. The default is `format: :standard`
+        * `:format` is one of those returned by
+          `Cldr.List.known_list_styles/0`. The default is `style: :standard`
 
         ## Examples
 
@@ -114,18 +114,18 @@ defmodule Cldr.List.Backend do
 
         ## Options
 
-        * `locale` is any configured locale. See `Cldr.known_locales()`. The default
+        * `:locale` is any configured locale. See `Cldr.known_locales()`. The default
           is `locale: Cldr.get_locale/0`
 
-        * `format` is one of those returned by
-          `Cldr.List.list_pattern_types_for/1`. The default is `format: :standard`
+        * `:style` is one of those returned by
+          `Cldr.List.known_list_styles/0`. The default is `style: :standard`
 
         ## Examples
 
             iex> #{inspect __MODULE__}.intersperse(["a", "b", "c"], locale: "en")
             {:ok, ["a", ", ", "b", ", and ", "c"]}
 
-            iex> #{inspect __MODULE__}.intersperse(["a", "b", "c"], locale: "en", format: :unit_narrow)
+            iex> #{inspect __MODULE__}.intersperse(["a", "b", "c"], locale: "en", style: :unit_narrow)
             {:ok, ["a", " ", "b", " ", "c"]}
 
             iex> #{inspect __MODULE__}.intersperse(["a", "b", "c"], locale: "fr")
@@ -200,7 +200,7 @@ defmodule Cldr.List.Backend do
             iex> #{inspect __MODULE__}.intersperse!(["a", "b", "c"], locale: "en")
             ["a", ", ", "b", ", and ", "c"]
 
-            iex> #{inspect __MODULE__}.intersperse!(["a", "b", "c"], locale: "en", format: :unit_narrow)
+            iex> #{inspect __MODULE__}.intersperse!(["a", "b", "c"], locale: "en", style: :unit_narrow)
             ["a", " ", "b", " ", "c"]
 
         """
@@ -215,33 +215,36 @@ defmodule Cldr.List.Backend do
           end
         end
 
+        # As of version 2.4.0 we prefer the `:style` keyword over the `:format`
+        # keyword since this is consistent with `Cldr.Unit`.
+
         @spec normalize_options(Keyword.t()) ::
           {:ok, LanguageTag.t(), atom()} | {:error, {module(), String.t()}}
 
         defp normalize_options(options) do
           locale = options[:locale] || unquote(backend).get_locale()
-          format = options[:format] || @default_style
+          style = options[:style] || options[:format] || @default_style
 
           with {:ok, locale} <- unquote(backend).validate_locale(locale),
-               {:ok, _} <- verify_format(locale.cldr_locale_name, format) do
-            {:ok, locale, format}
+               {:ok, _} <- verify_style(locale.cldr_locale_name, style) do
+            {:ok, locale, style}
           end
         end
 
-        @spec verify_format(String.t(), atom()) ::
+        @spec verify_style(String.t(), atom()) ::
           {:ok, atom()} | {:error, {module(), String.t()}}
 
-        def verify_format(locale_name, format) do
-          if format in list_pattern_styles_for(locale_name) do
+        def verify_style(locale_name, format) do
+          if format in list_styles_for(locale_name) do
             {:ok, format}
           else
             {:error,
-             {Cldr.UnknownFormatError, "The list format style #{inspect(format)} is not known."}}
+             {Cldr.UnknownFormatError, "The list style #{inspect(format)} is not known."}}
           end
         end
 
         @spec list_patterns_for(Cldr.Locale.locale_name()) :: map()
-        @spec list_pattern_styles_for(Cldr.Locale.locale_name()) :: [atom]
+        @spec list_styles_for(Cldr.Locale.locale_name()) :: [atom]
 
         for locale_name <- Cldr.Config.known_locale_names(config) do
           patterns =
@@ -330,15 +333,20 @@ defmodule Cldr.List.Backend do
 
           ## Example
 
-              iex> #{inspect __MODULE__}.list_pattern_styles_for("en")
+              iex> #{inspect __MODULE__}.list_styles_for("en")
               [:or, :or_narrow, :or_short, :standard, :standard_narrow, :standard_short,
                :unit, :unit_narrow, :unit_short]
 
           """
-          def list_pattern_styles_for(unquote(locale_name)) do
+          def list_styles_for(unquote(locale_name)) do
             unquote(pattern_names)
           end
         end
+
+        # TODO Deprecate as of version 3.0
+        @doc false
+        defdelegate list_pattern_styles_for(locale), to: __MODULE__, as: :list_styles_for
+
       end
     end
   end

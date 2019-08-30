@@ -24,18 +24,18 @@ defmodule Cldr.List do
 
   ## Options
 
-  * `locale` is any configured locale. See `Cldr.known_locales()`. The default
+  * `:locale` is any configured locale. See `Cldr.known_locales()`. The default
     is `locale: Cldr.get_locale/0`
 
-  * `format` is one of those returned by
-    `Cldr.List.list_pattern_styles_for/2`. The default is `format: :standard`
+  * `:style` is one of those returned by
+    `Cldr.List.known_list_styles/0`. The default is `style: :standard`
 
   ## Examples
 
       iex> Cldr.List.to_string(["a", "b", "c"], TestBackend.Cldr, locale: "en")
       {:ok, "a, b, and c"}
 
-      iex> Cldr.List.to_string(["a", "b", "c"], TestBackend.Cldr, locale: "en", format: :unit_narrow)
+      iex> Cldr.List.to_string(["a", "b", "c"], TestBackend.Cldr, locale: "en", style: :unit_narrow)
       {:ok, "a b c"}
 
       iex> Cldr.List.to_string(["a", "b", "c"], TestBackend.Cldr, locale: "fr")
@@ -108,18 +108,18 @@ defmodule Cldr.List do
 
   ## Options
 
-  * `locale` is any configured locale. See `Cldr.known_locales()`. The default
+  * `:locale` is any configured locale. See `Cldr.known_locales()`. The default
     is `locale: Cldr.get_locale/1`
 
-  * `format` is atom returned by
-    `Cldr.List.list_pattern_styles_for/2`. The default is `:standard`
+  * `:style` is atom returned by
+    `Cldr.List.known_list_styles/0`. The default is `:standard`
 
   ## Examples
 
       iex> Cldr.List.intersperse(["a", "b", "c"], TestBackend.Cldr, locale: "en")
       {:ok, ["a", ", ", "b", ", and ", "c"]}
 
-      iex> Cldr.List.intersperse(["a", "b", "c"], TestBackend.Cldr, locale: "en", format: :unit_narrow)
+      iex> Cldr.List.intersperse(["a", "b", "c"], TestBackend.Cldr, locale: "en", style: :unit_narrow)
       {:ok, ["a", " ", "b", " ", "c"]}
 
       iex> Cldr.List.intersperse(["a", "b", "c"], TestBackend.Cldr, locale: "fr")
@@ -242,15 +242,20 @@ defmodule Cldr.List do
 
   ## Example
 
-      iex> Cldr.List.list_pattern_styles_for("en", TestBackend.Cldr)
+      iex> Cldr.List.list_styles_for("en", TestBackend.Cldr)
       [:or, :or_narrow, :or_short, :standard, :standard_narrow,
         :standard_short, :unit, :unit_narrow, :unit_short]
 
   """
-  def list_pattern_styles_for(locale, backend \\ Cldr.default_backend()) do
+  def list_styles_for(locale, backend \\ Cldr.default_backend()) do
     module = Module.concat(backend, List)
-    module.list_pattern_styles_for(locale)
+    module.list_styles_for(locale)
   end
+
+  # TODO Deprecate at version 3.0
+  @doc false
+  defdelegate list_pattern_styles_for(locale, backend), to: __MODULE__, as: :list_styles_for
+
 
   @doc """
   Return the list of known list styles
