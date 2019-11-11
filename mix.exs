@@ -7,7 +7,6 @@ defmodule Cldr.Lists.Mixfile do
     [
       app: :ex_cldr_lists,
       version: @version,
-      licenses: ["Apache-2.0"],
       docs: docs(),
       elixir: "~> 1.5",
       name: "Cldr Lists",
