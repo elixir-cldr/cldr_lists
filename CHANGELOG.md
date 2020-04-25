@@ -4,7 +4,7 @@ This is the changelog for Cldr_lists v2.5.0 released on _____ 2020.  For older c
 
 ### Enhancements
 
-* Add implementation for the `Cldr.Chars` protocol which used by `Cldr.to_string/1` which is a drop-in replacement for `Kernel.to_string/1` with added default localization.
+* Add implementation for the `Cldr.Chars` protocol which is used by `Cldr.to_string/1` and which is a drop-in replacement for `Kernel.to_string/1` with added default localization.
 
 # Changelog for Cldr_Lists v2.4.0
 
