@@ -5,7 +5,7 @@ defmodule Cldr.List do
   If we have a list of days like `["Monday", "Tuesday", "Wednesday"]`
   then we can format that list for a given locale by:
 
-      iex> Cldr.List.to_string(["Monday", "Tuesday", "Wednesday"], TestBackend.Cldr, locale: "en")
+      iex> Cldr.List.to_string(["Monday", "Tuesday", "Wednesday"], MyApp.Cldr, locale: "en")
       {:ok, "Monday, Tuesday, and Wednesday"}
 
   """
@@ -32,22 +32,22 @@ defmodule Cldr.List do
 
   ## Examples
 
-      iex> Cldr.List.to_string(["a", "b", "c"], TestBackend.Cldr, locale: "en")
+      iex> Cldr.List.to_string(["a", "b", "c"], MyApp.Cldr, locale: "en")
       {:ok, "a, b, and c"}
 
-      iex> Cldr.List.to_string(["a", "b", "c"], TestBackend.Cldr, locale: "en", style: :unit_narrow)
+      iex> Cldr.List.to_string(["a", "b", "c"], MyApp.Cldr, locale: "en", style: :unit_narrow)
       {:ok, "a b c"}
 
-      iex> Cldr.List.to_string(["a", "b", "c"], TestBackend.Cldr, locale: "fr")
+      iex> Cldr.List.to_string(["a", "b", "c"], MyApp.Cldr, locale: "fr")
       {:ok, "a, b et c"}
 
-      iex> Cldr.List.to_string([1,2,3,4,5,6], TestBackend.Cldr)
+      iex> Cldr.List.to_string([1,2,3,4,5,6], MyApp.Cldr)
       {:ok, "1, 2, 3, 4, 5, and 6"}
 
-      iex> Cldr.List.to_string(["a"], TestBackend.Cldr)
+      iex> Cldr.List.to_string(["a"], MyApp.Cldr)
       {:ok, "a"}
 
-      iex> Cldr.List.to_string([1,2], TestBackend.Cldr)
+      iex> Cldr.List.to_string([1,2], MyApp.Cldr)
       {:ok, "1 and 2"}
 
   """
@@ -72,10 +72,10 @@ defmodule Cldr.List do
 
   ## Examples
 
-      iex> Cldr.List.to_string!(["a", "b", "c"], TestBackend.Cldr, locale: "en")
+      iex> Cldr.List.to_string!(["a", "b", "c"], MyApp.Cldr, locale: "en")
       "a, b, and c"
 
-      iex> Cldr.List.to_string!(["a", "b", "c"], TestBackend.Cldr, locale: "en", format: :unit_narrow)
+      iex> Cldr.List.to_string!(["a", "b", "c"], MyApp.Cldr, locale: "en", format: :unit_narrow)
       "a b c"
 
   """
@@ -116,22 +116,22 @@ defmodule Cldr.List do
 
   ## Examples
 
-      iex> Cldr.List.intersperse(["a", "b", "c"], TestBackend.Cldr, locale: "en")
+      iex> Cldr.List.intersperse(["a", "b", "c"], MyApp.Cldr, locale: "en")
       {:ok, ["a", ", ", "b", ", and ", "c"]}
 
-      iex> Cldr.List.intersperse(["a", "b", "c"], TestBackend.Cldr, locale: "en", style: :unit_narrow)
+      iex> Cldr.List.intersperse(["a", "b", "c"], MyApp.Cldr, locale: "en", style: :unit_narrow)
       {:ok, ["a", " ", "b", " ", "c"]}
 
-      iex> Cldr.List.intersperse(["a", "b", "c"], TestBackend.Cldr, locale: "fr")
+      iex> Cldr.List.intersperse(["a", "b", "c"], MyApp.Cldr, locale: "fr")
       {:ok, ["a", ", ", "b", " et ", "c"]}
 
-      iex> Cldr.List.intersperse([1,2,3,4,5,6], TestBackend.Cldr)
+      iex> Cldr.List.intersperse([1,2,3,4,5,6], MyApp.Cldr)
       {:ok, [1, ", ", 2, ", ", 3, ", ", 4, ", ", 5, ", and ", 6]}
 
-      iex> Cldr.List.intersperse(["a"], TestBackend.Cldr)
+      iex> Cldr.List.intersperse(["a"], MyApp.Cldr)
       {:ok, ["a"]}
 
-      iex> Cldr.List.intersperse([1,2], TestBackend.Cldr)
+      iex> Cldr.List.intersperse([1,2], MyApp.Cldr)
       {:ok, [1, " and ", 2]}
 
   """
@@ -149,10 +149,10 @@ defmodule Cldr.List do
 
   ## Examples
 
-      iex> Cldr.List.intersperse!(["a", "b", "c"], TestBackend.Cldr, locale: "en")
+      iex> Cldr.List.intersperse!(["a", "b", "c"], MyApp.Cldr, locale: "en")
       ["a", ", ", "b", ", and ", "c"]
 
-      iex> Cldr.List.intersperse!(["a", "b", "c"], TestBackend.Cldr, locale: "en", format: :unit_narrow)
+      iex> Cldr.List.intersperse!(["a", "b", "c"], MyApp.Cldr, locale: "en", format: :unit_narrow)
       ["a", " ", "b", " ", "c"]
 
   """
@@ -170,7 +170,7 @@ defmodule Cldr.List do
 
   ## Example
 
-      iex> Cldr.List.list_patterns_for "en", TestBackend.Cldr
+      iex> Cldr.List.list_patterns_for "en", MyApp.Cldr
       %{
         or: %{
           "2": [0, " or ", 1],
@@ -242,7 +242,7 @@ defmodule Cldr.List do
 
   ## Example
 
-      iex> Cldr.List.list_styles_for("en", TestBackend.Cldr)
+      iex> Cldr.List.list_styles_for("en", MyApp.Cldr)
       [:or, :or_narrow, :or_short, :standard, :standard_narrow,
         :standard_short, :unit, :unit_narrow, :unit_short]
 
