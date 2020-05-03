@@ -1,7 +1,7 @@
 defmodule Cldr.Lists.Mixfile do
   use Mix.Project
 
-  @version "2.5.0-dev"
+  @version "2.5.0-rc.0"
 
   def project do
     [
@@ -10,7 +10,7 @@ defmodule Cldr.Lists.Mixfile do
       docs: docs(),
       elixir: "~> 1.5",
       name: "Cldr Lists",
-      source_url: "https://github.com/kipcole9/cldr_lists",
+      source_url: "https://github.com/elixir-cldr/cldr_lists",
       description: description(),
       package: package(),
       start_permanent: Mix.env == :prod,
@@ -40,14 +40,7 @@ defmodule Cldr.Lists.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:ex_cldr, path: "../cldr", override: true},
-      {:ex_cldr_currencies, github: "elixir-cldr/cldr_currencies"},
-      {:cldr_utils, github: "elixir-cldr/cldr_utils", override: true},
-      {:ex_cldr_numbers, github: "elixir-cldr/cldr_numbers"},
-
-      # {:ex_cldr, "~> 2.14"},
-      # {:ex_cldr_numbers, "~> 2.13"},
-
+      {:ex_cldr_numbers, "~> 2.13-rc"},
       {:ex_doc, "~> 0.18", only: [:release, :dev], runtime: false},
       {:jason, "~> 1.0", optional: true},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false}
