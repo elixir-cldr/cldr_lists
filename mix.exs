@@ -40,11 +40,10 @@ defmodule Cldr.Lists.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:ex_cldr, "~> 2.8"},
       {:ex_cldr_numbers, "~> 2.6"},
       {:ex_doc, "~> 0.18", only: [:release, :dev], runtime: false},
       {:jason, "~> 1.0", optional: true},
-      {:dialyxir, "~> 1.0.0-rc.4", only: [:dev], runtime: false}
+      {:dialyxir, "~> 1.0", only: [:dev], runtime: false}
     ]
   end
 
