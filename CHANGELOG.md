@@ -1,3 +1,15 @@
+# Changelog for Cldr_Lists v2.6.0
+
+This is the changelog for Cldr_lists v2.6.0 released on July 1st, 2020.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
+
+### Enhancements
+
+* Standardize on `:format` rather than `:style` for formatting options. This is part of an ongoing effort to standardise option naming across the CLDR libraries. Thanks to @Zurga for the collaboration. Closes #4.  This reverts the decision made in `ex_cldr_lists version 2.4.0`.
+
+* Deprecates `Cldr.List.list_styles_for/2` in favour of `Cldr.List.list_formats_for/2`
+
+* Updates to use `Cldr.locale_and_backend_from/{1, 2}` which normalizes extraction of backend and locale from parameters and options. As a result, also bump the minimum version of `ex_cldr_numbers` to `2.15`
+
 # Changelog for Cldr_Lists v2.5.0
 
 This is the changelog for Cldr_lists v2.5.0 released on May 4th, 2020.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)

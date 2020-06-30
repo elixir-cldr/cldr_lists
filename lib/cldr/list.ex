@@ -25,17 +25,17 @@ defmodule Cldr.List do
   ## Options
 
   * `:locale` is any configured locale. See `Cldr.known_locales()`. The default
-    is `locale: Cldr.get_locale/0`
+    is `locale: Cldr.get_locale/1`
 
-  * `:style` is one of those returned by
-    `Cldr.List.known_list_styles/0`. The default is `style: :standard`
+  * `:format` is one of those returned by
+    `Cldr.List.known_list_formats/0`. The default is `format: :standard`
 
   ## Examples
 
       iex> Cldr.List.to_string(["a", "b", "c"], MyApp.Cldr, locale: "en")
       {:ok, "a, b, and c"}
 
-      iex> Cldr.List.to_string(["a", "b", "c"], MyApp.Cldr, locale: "en", style: :unit_narrow)
+      iex> Cldr.List.to_string(["a", "b", "c"], MyApp.Cldr, locale: "en", format: :unit_narrow)
       {:ok, "a b c"}
 
       iex> Cldr.List.to_string(["a", "b", "c"], MyApp.Cldr, locale: "fr")
@@ -84,11 +84,12 @@ defmodule Cldr.List do
   def to_string!(list, backend \\ Cldr.default_backend(), options \\ [])
 
   def to_string!(list, options, []) when is_list(options) do
-    {backend, options} = Keyword.pop(options, :backend, Cldr.default_backend())
+    {_locale, backend} = Cldr.locale_and_backend_from(options)
     to_string!(list, backend, options)
   end
 
   def to_string!(list, backend, options) do
+    {_locale, backend} = Cldr.locale_and_backend_from(options[:locale], backend)
     module = Module.concat(backend, List)
     module.to_string!(list, options)
   end
@@ -108,18 +109,18 @@ defmodule Cldr.List do
 
   ## Options
 
-  * `:locale` is any configured locale. See `Cldr.known_locales()`. The default
+  * `:locale` is any configured locale. See `Cldr.known_locale_names/1`. The default
     is `locale: Cldr.get_locale/1`
 
-  * `:style` is atom returned by
-    `Cldr.List.known_list_styles/0`. The default is `:standard`
+  * `:format` is atom returned by
+    `Cldr.List.known_list_formats/0`. The default is `:standard`
 
   ## Examples
 
       iex> Cldr.List.intersperse(["a", "b", "c"], MyApp.Cldr, locale: "en")
       {:ok, ["a", ", ", "b", ", and ", "c"]}
 
-      iex> Cldr.List.intersperse(["a", "b", "c"], MyApp.Cldr, locale: "en", style: :unit_narrow)
+      iex> Cldr.List.intersperse(["a", "b", "c"], MyApp.Cldr, locale: "en", format: :unit_narrow)
       {:ok, ["a", " ", "b", " ", "c"]}
 
       iex> Cldr.List.intersperse(["a", "b", "c"], MyApp.Cldr, locale: "fr")
@@ -138,7 +139,16 @@ defmodule Cldr.List do
   @spec intersperse(list(term()), Cldr.backend(), Keyword.t()) ::
           {:ok, list(String.t())} | {:error, {module(), String.t()}}
 
-  def intersperse(list, backend \\ Cldr.default_backend(), options \\ []) do
+  def intersperse(list, backend \\ nil, options \\ [])
+
+  def intersperse(list, options, []) when is_list(options) do
+    {_locale, backend} = Cldr.locale_and_backend_from(options)
+    module = Module.concat(backend, List)
+    module.intersperse(list, options)
+  end
+
+  def intersperse(list, backend, options) do
+    {_locale, backend} = Cldr.locale_and_backend_from(options[:locale], backend)
     module = Module.concat(backend, List)
     module.intersperse(list, options)
   end
@@ -157,7 +167,8 @@ defmodule Cldr.List do
 
   """
   @spec intersperse!(list(term()), Cldr.backend(), Keyword.t()) :: list(String.t()) | no_return()
-  def intersperse!(list, backend \\ Cldr.default_backend(), options \\ []) do
+  def intersperse!(list, backend \\ nil, options \\ []) do
+    {_locale, backend} = Cldr.locale_and_backend_from(options[:locale], backend)
     module = Module.concat(backend, List)
     module.intersperse!(list, options)
   end
@@ -230,48 +241,58 @@ defmodule Cldr.List do
 
   """
   def list_patterns_for(locale, backend \\ Cldr.default_backend()) do
+    {locale, backend} = Cldr.locale_and_backend_from(locale, backend)
     module = Module.concat(backend, List)
     module.list_patterns_for(locale)
   end
 
   @doc """
-  Returns the styles of list patterns available for a locale.
+  Returns the formats of list patterns available for a locale.
 
-  Returns a list of `atom`s of of the list format styles that are
+  Returns a list of `atom`s of of the list formats that are
   available in CLDR for a locale.
 
   ## Example
 
-      iex> Cldr.List.list_styles_for("en", MyApp.Cldr)
+      iex> Cldr.List.list_formats_for("en", MyApp.Cldr)
       [:or, :or_narrow, :or_short, :standard, :standard_narrow,
         :standard_short, :unit, :unit_narrow, :unit_short]
 
   """
-  def list_styles_for(locale, backend \\ Cldr.default_backend()) do
+  def list_formats_for(locale, backend \\ nil) do
+    {locale, backend} = Cldr.locale_and_backend_from(locale, backend)
     module = Module.concat(backend, List)
-    module.list_styles_for(locale)
+    module.list_formats_for(locale)
   end
 
-  # TODO Deprecate at version 3.0
+  @deprecated "Use Cldr.List.list_formats_for/2"
+  defdelegate list_styles_for(locale, backend), to: __MODULE__, as: :list_formats_for
+
+  # TODO Remove at version 3.0
   @doc false
-  defdelegate list_pattern_styles_for(locale, backend), to: __MODULE__, as: :list_styles_for
+  defdelegate list_pattern_styles_for(locale, backend), to: __MODULE__, as: :list_formats_for
 
 
   @doc """
-  Return the list of known list styles
+  Return the list of known list formats.
 
   ## Example
 
-      iex> Cldr.List.known_list_styles()
+      iex> Cldr.List.known_list_formats()
       [:or, :or_narrow, :or_short, :standard, :standard_narrow,
         :standard_short, :unit, :unit_narrow, :unit_short]
 
   """
 
-  @known_list_styles Cldr.Config.get_locale("root", %Cldr.Config{locales: ["root"]})
+  @known_list_formats Cldr.Config.get_locale("root", %Cldr.Config{locales: ["root"]})
     |> Map.get(:list_formats) |> Map.keys
 
+  def known_list_formats do
+    @known_list_formats
+  end
+
+  @deprecated "Use Cldr.List.known_list_formats/0"
   def known_list_styles do
-    @known_list_styles
+    known_list_formats()
   end
 end

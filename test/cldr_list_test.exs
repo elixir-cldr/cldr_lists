@@ -30,7 +30,7 @@ defmodule Cldr.List.Test do
     test "a bad format returns an error" do
       assert List.to_string([1, 2, 3], MyApp.Cldr, format: :jabberwocky) ==
                {:error,
-                {Cldr.UnknownFormatError, "The list style :jabberwocky is not known."}}
+                {Cldr.UnknownFormatError, "The list format :jabberwocky is not known."}}
     end
 
     test "a bad locale returns an error" do
@@ -65,7 +65,7 @@ defmodule Cldr.List.Test do
     test "a bad format returns an error" do
       assert List.intersperse([1, 2, 3], MyApp.Cldr, format: :jabberwocky) ==
                {:error,
-                {Cldr.UnknownFormatError, "The list style :jabberwocky is not known."}}
+                {Cldr.UnknownFormatError, "The list format :jabberwocky is not known."}}
     end
 
     test "a bad locale returns an error" do
