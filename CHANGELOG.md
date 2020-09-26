@@ -1,3 +1,11 @@
+# Changelog for Cldr_Lists v2.6.1
+
+This is the changelog for Cldr_lists v2.6.1 released on September 26th, 2020.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
+
+### Bug Fixes
+
+* Use `Cldr.default_backend!/0` instead of `Cldr.default_backend/0` if its available
+
 # Changelog for Cldr_Lists v2.6.0
 
 This is the changelog for Cldr_lists v2.6.0 released on July 1st, 2020.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)

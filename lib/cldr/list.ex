@@ -54,10 +54,10 @@ defmodule Cldr.List do
   @spec to_string([term(), ...], Cldr.backend() | Keyword.t(), Keyword.t()) ::
           {:ok, String.t()} | {:error, {atom, binary}}
 
-  def to_string(list, backend \\ Cldr.default_backend(), options \\ [])
+  def to_string(list, backend \\ default_backend(), options \\ [])
 
   def to_string(list, options, []) when is_list(options) do
-    {backend, options} = Keyword.pop(options, :backend, Cldr.default_backend())
+    {backend, options} = Keyword.pop(options, :backend, default_backend())
     to_string(list, backend, options)
   end
 
@@ -81,7 +81,7 @@ defmodule Cldr.List do
   """
   @spec to_string!([term(), ...], Cldr.backend() | Keyword.t(), Keyword.t()) :: String.t() | no_return()
 
-  def to_string!(list, backend \\ Cldr.default_backend(), options \\ [])
+  def to_string!(list, backend \\ default_backend(), options \\ [])
 
   def to_string!(list, options, []) when is_list(options) do
     {_locale, backend} = Cldr.locale_and_backend_from(options)
@@ -240,7 +240,7 @@ defmodule Cldr.List do
       }
 
   """
-  def list_patterns_for(locale, backend \\ Cldr.default_backend()) do
+  def list_patterns_for(locale, backend \\ default_backend()) do
     {locale, backend} = Cldr.locale_and_backend_from(locale, backend)
     module = Module.concat(backend, List)
     module.list_patterns_for(locale)
@@ -294,5 +294,17 @@ defmodule Cldr.List do
   @deprecated "Use Cldr.List.known_list_formats/0"
   def known_list_styles do
     known_list_formats()
+  end
+
+  @doc false
+  # TODO remove for Cldr 3.0
+  if Code.ensure_loaded?(Cldr) && function_exported?(Cldr, :default_backend!, 0) do
+    def default_backend do
+      Cldr.default_backend!()
+    end
+  else
+    def default_backend do
+      Cldr.default_backend()
+    end
   end
 end
