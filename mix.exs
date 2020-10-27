@@ -1,14 +1,14 @@
 defmodule Cldr.Lists.Mixfile do
   use Mix.Project
 
-  @version "2.6.1"
+  @version "2.6.2"
 
   def project do
     [
       app: :ex_cldr_lists,
       version: @version,
       docs: docs(),
-      elixir: "~> 1.5",
+      elixir: "~> 1.8",
       name: "Cldr Lists",
       source_url: "https://github.com/elixir-cldr/cldr_lists",
       description: description(),
@@ -40,7 +40,7 @@ defmodule Cldr.Lists.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:ex_cldr_numbers, "~> 2.15"},
+      {:ex_cldr_numbers, "~> 2.15 or ~> 2.16.0-rc"},
       {:ex_doc, "~> 0.18", only: [:release, :dev], runtime: false},
       {:jason, "~> 1.0", optional: true},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false}
