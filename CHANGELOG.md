@@ -1,6 +1,6 @@
-# Changelog for Cldr_Lists v2.7.0-rc.0
+# Changelog for Cldr_Lists v2.7.0
 
-This is the changelog for Cldr_lists v2.7.0-rc.0 released on October 27th, 2020.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
+This is the changelog for Cldr_lists v2.7.0 released on November 1st, 2020.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
 
 ### Enhancements
 
