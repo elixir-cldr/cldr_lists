@@ -1,3 +1,11 @@
+# Changelog for Cldr_Lists v2.8.0
+
+This is the changelog for Cldr_lists v2.8.0 released on March 19th, 2021.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
+
+### Enhancements
+
+* Support [CLDR 39](http://cldr.unicode.org/index/downloads/cldr-39)
+
 # Changelog for Cldr_Lists v2.7.0
 
 This is the changelog for Cldr_lists v2.7.0 released on November 1st, 2020.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
