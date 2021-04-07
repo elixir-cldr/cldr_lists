@@ -54,10 +54,10 @@ defmodule Cldr.List do
   @spec to_string([term(), ...], Cldr.backend() | Keyword.t(), Keyword.t()) ::
           {:ok, String.t()} | {:error, {atom, binary}}
 
-  def to_string(list, backend \\ Cldr.default_backend(), options \\ [])
+  def to_string(list, backend \\ Cldr.default_backend!(), options \\ [])
 
   def to_string(list, options, []) when is_list(options) do
-    {backend, options} = Keyword.pop(options, :backend, Cldr.default_backend())
+    {backend, options} = Keyword.pop(options, :backend, Cldr.default_backend!())
     to_string(list, backend, options)
   end
 
@@ -81,10 +81,10 @@ defmodule Cldr.List do
   """
   @spec to_string!([term(), ...], Cldr.backend() | Keyword.t(), Keyword.t()) :: String.t() | no_return()
 
-  def to_string!(list, backend \\ Cldr.default_backend(), options \\ [])
+  def to_string!(list, backend \\ Cldr.default_backend!(), options \\ [])
 
   def to_string!(list, options, []) when is_list(options) do
-    {backend, options} = Keyword.pop(options, :backend, Cldr.default_backend())
+    {backend, options} = Keyword.pop(options, :backend, Cldr.default_backend!())
     to_string!(list, backend, options)
   end
 
@@ -138,7 +138,7 @@ defmodule Cldr.List do
   @spec intersperse(list(term()), Cldr.backend(), Keyword.t()) ::
           {:ok, list(String.t())} | {:error, {module(), String.t()}}
 
-  def intersperse(list, backend \\ Cldr.default_backend(), options \\ []) do
+  def intersperse(list, backend \\ Cldr.default_backend!(), options \\ []) do
     module = Module.concat(backend, List)
     module.intersperse(list, options)
   end
@@ -157,7 +157,7 @@ defmodule Cldr.List do
 
   """
   @spec intersperse!(list(term()), Cldr.backend(), Keyword.t()) :: list(String.t()) | no_return()
-  def intersperse!(list, backend \\ Cldr.default_backend(), options \\ []) do
+  def intersperse!(list, backend \\ Cldr.default_backend!(), options \\ []) do
     module = Module.concat(backend, List)
     module.intersperse!(list, options)
   end
@@ -229,7 +229,7 @@ defmodule Cldr.List do
       }
 
   """
-  def list_patterns_for(locale, backend \\ Cldr.default_backend()) do
+  def list_patterns_for(locale, backend \\ Cldr.default_backend!()) do
     module = Module.concat(backend, List)
     module.list_patterns_for(locale)
   end
@@ -247,7 +247,7 @@ defmodule Cldr.List do
         :standard_short, :unit, :unit_narrow, :unit_short]
 
   """
-  def list_styles_for(locale, backend \\ Cldr.default_backend()) do
+  def list_styles_for(locale, backend \\ Cldr.default_backend!()) do
     module = Module.concat(backend, List)
     module.list_styles_for(locale)
   end
