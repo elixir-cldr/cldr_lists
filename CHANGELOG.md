@@ -1,6 +1,6 @@
 # Changelog for Cldr_Lists v2.8.0
 
-This is the changelog for Cldr_lists v2.8.0 released onApril 8th, 2021.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
+This is the changelog for Cldr_lists v2.8.0 released on April 8th, 2021.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
 
 ### Enhancements
 
