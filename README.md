@@ -56,7 +56,7 @@ iex> h MyApp.Cldr.List.intersperse
 ### List Formatting
 
 ```elixir
-iex> MyApp.Cldr.List.list_pattern_styles_for "en"
+iex> MyApp.Cldr.List.list_formats_for "en"
 [:or, :standard, :standard_short, :unit, :unit_narrow, :unit_short]
 
 iex> MyApp.Cldr.List.to_string(["a", "b", "c"], locale: "en")
@@ -78,22 +78,22 @@ iex> MyApp.Cldr.List.intersperse(["a", "b", "c"], locale: "en")
 
 ### List Formats
 
-List formats are referred to by a pattern style the standardises the way to refernce different formats in a locale.  See `MyApp.Cldr.List.list_pattern_styles_for/1`.  For example:
+List formats are referred to by a pattern style the standardises the way to refernce different formats in a locale.  See `MyApp.Cldr.List.list_formats_for/1`.  For example:
 
 ```elixir
-iex> MyApp.Cldr.List.list__pattern_styles_for "en"
+iex> MyApp.Cldr.List.list_formats_for "en"
 [:standard, :standard_short, :unit, :unit_narrow, :unit_short]
 
-iex> MyApp.Cldr.List.list_pattern_styles_for "ru"
+iex> MyApp.Cldr.List.list_formats_for "ru"
 [:standard, :standard_short, :unit, :unit_narrow, :unit_short]
 
-iex> MyApp.Cldr.List.list_pattern_styles_for "th"
+iex> MyApp.Cldr.List.list_formats_for "th"
 [:standard, :standard_short, :unit, :unit_narrow, :unit_short]
 ```
 
-### Formatting styles
+### Known formats
 
-The common formatting styles for a locale are:
+The common formats for a locale are:
 
 * :or,
 * :or_narrow,
@@ -105,9 +105,9 @@ The common formatting styles for a locale are:
 * :unit_narrow,
 * :unit_short
 
-This list is not fixed or definitive, other styles may be present for a locale.
+This list is not fixed or definitive, other formats may be present for a locale.
 
-The definitions of these styles can be explored through `MyApp.Cldr.List.list_patterns_for/1`. For example:
+The definitions of these formats can be explored through `MyApp.Cldr.List.list_patterns_for/1`. For example:
 
 ```elixir
 iex> MyApp.Cldr.List.list_patterns_for "fr"

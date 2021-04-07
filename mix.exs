@@ -1,16 +1,16 @@
 defmodule Cldr.Lists.Mixfile do
   use Mix.Project
 
-  @version "2.5.0"
+  @version "2.8.0"
 
   def project do
     [
       app: :ex_cldr_lists,
       version: @version,
       docs: docs(),
-      elixir: "~> 1.5",
+      elixir: "~> 1.8",
       name: "Cldr Lists",
-      source_url: "https://github.com/kipcole9/cldr_lists",
+      source_url: "https://github.com/elixir-cldr/cldr_lists",
       description: description(),
       package: package(),
       start_permanent: Mix.env == :prod,
@@ -64,7 +64,7 @@ defmodule Cldr.Lists.Mixfile do
       main: "readme",
       extras: ["README.md", "CHANGELOG.md", "LICENSE.md"],
       logo: "logo.png",
-      skip_undefined_reference_warnings_on: ["changelog"]
+      skip_undefined_reference_warnings_on: ["changelog", "CHANGELOG.md"]
     ]
   end
 
