@@ -35,7 +35,7 @@ defmodule Cldr.List.Test do
 
     test "a bad locale returns an error" do
       assert List.to_string([1, 2, 3], MyApp.Cldr, locale: "nothing") ==
-               {:error, {Cldr.UnknownLocaleError, "The locale \"nothing\" is not known."}}
+               {:error, {Cldr.InvalidLanguageError, "The language \"nothing\" is invalid"}}
     end
 
     test "that an invalid format raises" do
@@ -70,7 +70,7 @@ defmodule Cldr.List.Test do
 
     test "a bad locale returns an error" do
       assert List.intersperse([1, 2, 3], MyApp.Cldr, locale: "nothing") ==
-               {:error, {Cldr.UnknownLocaleError, "The locale \"nothing\" is not known."}}
+               {:error, {Cldr.InvalidLanguageError, "The language \"nothing\" is invalid"}}
     end
 
     test "that an invalid format raises" do

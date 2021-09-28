@@ -173,7 +173,7 @@ defmodule Cldr.List.Backend do
 
         # For when there are two elements only
         def intersperse([first, last], locale, pattern_type) do
-          pattern = list_patterns_for(locale.cldr_locale_name)[pattern_type][:"2"]
+          pattern = list_patterns_for(locale.cldr_locale_name)[pattern_type][2]
           Substitution.substitute([first, last], pattern)
         end
 
@@ -262,55 +262,55 @@ defmodule Cldr.List.Backend do
               iex> #{inspect __MODULE__}.list_patterns_for "en"
               %{
                 or: %{
-                  "2": [0, " or ", 1],
+                  2 => [0, " or ", 1],
                   end: [0, ", or ", 1],
                   middle: [0, ", ", 1],
                   start: [0, ", ", 1]
                 },
                 or_narrow: %{
-                  "2": [0, " or ", 1],
+                  2 => [0, " or ", 1],
                   end: [0, ", or ", 1],
                   middle: [0, ", ", 1],
                   start: [0, ", ", 1]
                 },
                 or_short: %{
-                  "2": [0, " or ", 1],
+                  2 => [0, " or ", 1],
                   end: [0, ", or ", 1],
                   middle: [0, ", ", 1],
                   start: [0, ", ", 1]
                 },
                 standard: %{
-                  "2": [0, " and ", 1],
+                  2 => [0, " and ", 1],
                   end: [0, ", and ", 1],
                   middle: [0, ", ", 1],
                   start: [0, ", ", 1]
                 },
                 standard_narrow: %{
-                  "2": [0, ", ", 1],
+                  2 => [0, ", ", 1],
                   end: [0, ", ", 1],
                   middle: [0, ", ", 1],
                   start: [0, ", ", 1]
                 },
                 standard_short: %{
-                  "2": [0, " & ", 1],
+                  2 => [0, " & ", 1],
                   end: [0, ", & ", 1],
                   middle: [0, ", ", 1],
                   start: [0, ", ", 1]
                 },
                 unit: %{
-                  "2": [0, ", ", 1],
+                  2 => [0, ", ", 1],
                   end: [0, ", ", 1],
                   middle: [0, ", ", 1],
                   start: [0, ", ", 1]
                 },
                 unit_narrow: %{
-                  "2": [0, " ", 1],
+                  2 => [0, " ", 1],
                   end: [0, " ", 1],
                   middle: [0, " ", 1],
                   start: [0, " ", 1]
                 },
                 unit_short: %{
-                  "2": [0, ", ", 1],
+                  2 => [0, ", ", 1],
                   end: [0, ", ", 1],
                   middle: [0, ", ", 1],
                   start: [0, ", ", 1]
