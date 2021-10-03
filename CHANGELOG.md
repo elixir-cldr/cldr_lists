@@ -1,4 +1,14 @@
-# Changelog for Cldr_Lists v2.8.0
+# Changelog
+
+## Cldr_Lists v2.9.0-rc.0
+
+This is the changelog for Cldr_lists v2.9.0-rc.0 released on October 3rd, 2021.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
+
+### Enhancements
+
+* Support [CLDR 40](http://cldr.unicode.org/index/downloads/cldr-40)
+
+## Cldr_Lists v2.8.0
 
 This is the changelog for Cldr_lists v2.8.0 released on April 8th, 2021.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
 
@@ -6,7 +16,7 @@ This is the changelog for Cldr_lists v2.8.0 released on April 8th, 2021.  For ol
 
 * Support [CLDR 39](http://cldr.unicode.org/index/downloads/cldr-39)
 
-# Changelog for Cldr_Lists v2.7.0
+## Cldr_Lists v2.7.0
 
 This is the changelog for Cldr_lists v2.7.0 released on November 1st, 2020.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
 
@@ -14,7 +24,7 @@ This is the changelog for Cldr_lists v2.7.0 released on November 1st, 2020.  For
 
 * Support [CLDR 38](http://cldr.unicode.org/index/downloads/cldr-38)
 
-# Changelog for Cldr_Lists v2.6.1
+## Cldr_Lists v2.6.1
 
 This is the changelog for Cldr_lists v2.6.1 released on September 26th, 2020.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
 
@@ -22,7 +32,7 @@ This is the changelog for Cldr_lists v2.6.1 released on September 26th, 2020.  F
 
 * Use `Cldr.default_backend!/0` instead of `Cldr.default_backend/0` if its available
 
-# Changelog for Cldr_Lists v2.6.0
+## Cldr_Lists v2.6.0
 
 This is the changelog for Cldr_lists v2.6.0 released on July 1st, 2020.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
 
@@ -34,7 +44,7 @@ This is the changelog for Cldr_lists v2.6.0 released on July 1st, 2020.  For old
 
 * Updates to use `Cldr.locale_and_backend_from/{1, 2}` which normalizes extraction of backend and locale from parameters and options. As a result, also bump the minimum version of `ex_cldr_numbers` to `2.15`
 
-# Changelog for Cldr_Lists v2.5.0
+## Cldr_Lists v2.5.0
 
 This is the changelog for Cldr_lists v2.5.0 released on May 4th, 2020.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
 
@@ -44,7 +54,7 @@ This is the changelog for Cldr_lists v2.5.0 released on May 4th, 2020.  For olde
 
 * Depends upon [ex_cldr_numbers versin 2.17](https://hex.pm/packages/ex_cldr_numbers/2.17.0) which encapsulates CLDR39 data.
 
-# Changelog for Cldr_Lists v2.4.0
+## Cldr_Lists v2.4.0
 
 This is the changelog for Cldr_lists v2.4.0 released on August 31st, 2019.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
 
@@ -54,7 +64,7 @@ This is the changelog for Cldr_lists v2.4.0 released on August 31st, 2019.  For 
 
 * Rename `Cldr.List.list_pattern_styles_for/2` to `Cldr.List.list_styles_for/2`. `Cldr.List.list_pattern_styles_for/2` will still operate and delegates to `Cldr.List.list_styles_for/2`.  It is now deprecated and will be removed in `ex_cldr_lists` 3.0.
 
-# Changelog for Cldr_Lists v2.3.0
+## Cldr_Lists v2.3.0
 
 This is the changelog for Cldr_lists v2.3.0 released on August 29th, 2019.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
 
@@ -62,7 +72,7 @@ This is the changelog for Cldr_lists v2.3.0 released on August 29th, 2019.  For 
 
 * Add `Cldr.List.known_list_styles/0`
 
-# Changelog for Cldr_Lists v2.2.2
+## Cldr_Lists v2.2.2
 
 This is the changelog for Cldr_lists v2.2.2 released on August 23rd, 2019.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
 
@@ -70,7 +80,7 @@ This is the changelog for Cldr_lists v2.2.2 released on August 23rd, 2019.  For 
 
 * Fix `@spec` for `Cldr.List.to_string/3` and `Cldr.List.to_string!/3`
 
-# Changelog for Cldr_Lists v2.2.1
+## Cldr_Lists v2.2.1
 
 This is the changelog for Cldr_lists v2.2.1 released on August 21st, 2019.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
 
@@ -82,7 +92,7 @@ This is the changelog for Cldr_lists v2.2.1 released on August 21st, 2019.  For 
 
 * Fix dialyzer warnings
 
-# Changelog for Cldr_Lists v2.2.0
+## Cldr_Lists v2.2.0
 
 This is the changelog for Cldr_lists v2.2.0 released on March 28th, 2019.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
 
@@ -90,7 +100,7 @@ This is the changelog for Cldr_lists v2.2.0 released on March 28th, 2019.  For o
 
 * Updates to [CLDR version 35.0.0](http://cldr.unicode.org/index/downloads/cldr-35) released on March 27th 2019.
 
-# Changelog for Cldr_Lists v2.1.0
+## Cldr_Lists v2.1.0
 
 This is the changelog for Cldr_lists v2.1.0 released on March 23rd, 2019.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
 
@@ -98,7 +108,7 @@ This is the changelog for Cldr_lists v2.1.0 released on March 23rd, 2019.  For o
 
 * Support `Cldr.default_backend/0` and apply it as the default for functions in `Cldr.List`
 
-# Changelog for Cldr_Lists v2.0.2
+## Cldr_Lists v2.0.2
 
 This is the changelog for Cldr_lists v2.0.2 released on March 20th, 2019.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
 
@@ -106,7 +116,7 @@ This is the changelog for Cldr_lists v2.0.2 released on March 20th, 2019.  For o
 
 * Fix dialyzer warnings
 
-# Changelog for Cldr_Lists v2.0.1
+## Cldr_Lists v2.0.1
 
 This is the changelog for Cldr_lists v2.0.1 released on March 15th, 2019.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
 
@@ -124,7 +134,7 @@ defmodule MyApp.Cldr do
 end
 ```
 
-# Changelog for Cldr_Lists v2.0.0
+## Cldr_Lists v2.0.0
 
 This is the changelog for Cldr_lists v2.0.0 released on November 24th, 2018.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
 

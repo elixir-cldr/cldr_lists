@@ -290,8 +290,9 @@ defmodule Cldr.List do
         :standard_short, :unit, :unit_narrow, :unit_short]
 
   """
+  @root_locale Cldr.Config.root_locale_name()
 
-  @known_list_formats Cldr.Config.get_locale("root", %Cldr.Config{locales: ["root"]})
+  @known_list_formats Cldr.Config.get_locale(@root_locale, %Cldr.Config{locales: [@root_locale]})
     |> Map.get(:list_formats) |> Map.keys
 
   def known_list_formats do

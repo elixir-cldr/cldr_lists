@@ -1,7 +1,7 @@
 defmodule Cldr.Lists.Mixfile do
   use Mix.Project
 
-  @version "2.9.0"
+  @version "2.9.0-rc.0"
 
   def project do
     [
@@ -30,18 +30,15 @@ defmodule Cldr.Lists.Mixfile do
     """
   end
 
-  # Run "mix help compile.app" to learn about applications.
   def application do
     [
       extra_applications: [:logger]
     ]
   end
 
-  # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      # {:ex_cldr_numbers, "~> 2.17"},
-      {:ex_cldr_numbers, path: "../cldr_numbers"},
+      {:ex_cldr_numbers, "~> 2.23-rc"},
       {:ex_doc, "~> 0.18", optional: true, runtime: false},
       {:jason, "~> 1.0", optional: true},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false}
