@@ -291,8 +291,8 @@ defmodule Cldr.List do
 
   """
   @root_locale Cldr.Config.root_locale_name()
-
-  @known_list_formats Cldr.Config.get_locale(@root_locale, %Cldr.Config{locales: [@root_locale]})
+  @config %Cldr.Config{locales: [@root_locale]}
+  @known_list_formats Cldr.Locale.Loader.get_locale(@root_locale, @config)
     |> Map.get(:list_formats) |> Map.keys
 
   def known_list_formats do

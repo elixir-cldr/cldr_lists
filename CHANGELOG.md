@@ -1,6 +1,14 @@
 # Changelog
 
-## Cldr_Lists v2.9.0-rc.0
+## Cldr_Lists v2.9.0-rc.1
+
+This is the changelog for Cldr_lists v2.9.0-rc.1 released on October 24th, 2021.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
+
+### Deprecations
+
+* Don't call deprecated `Cldr.Config.get_locale/2`, call `Cldr.Locale.Loader.get_locale/2` instead.
+
+## Cldr_Lists v2.9.0-rc.1
 
 This is the changelog for Cldr_lists v2.9.0-rc.0 released on October 3rd, 2021.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
 
