@@ -243,7 +243,7 @@ defmodule Cldr.List.Backend do
         @spec list_patterns_for(Cldr.Locale.locale_name()) :: map()
         @spec list_formats_for(Cldr.Locale.locale_name()) :: [atom]
 
-        for locale_name <- Cldr.Config.known_locale_names(config) do
+        for locale_name <- Cldr.Locale.Loader.known_locale_names(config) do
           patterns =
             locale_name
             |> Cldr.Locale.Loader.get_locale(config)
