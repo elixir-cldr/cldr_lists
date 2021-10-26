@@ -1,5 +1,19 @@
 # Changelog
 
+## Cldr_Lists v2.9.0
+
+This is the changelog for Cldr_lists v2.9.0 released on October 27th, 2021.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
+
+### Enhancements
+
+* Updates to support [CLDR release 40](https://cldr.unicode.org/index/downloads/cldr-40) via [ex_cldr version 2.24](https://hex.pm/packages/ex_cldr/2.24.0)
+
+### Deprecations
+
+* Don't call deprecated `Cldr.Config.get_locale/2`, call `Cldr.Locale.Loader.get_locale/2` instead.
+
+* Don't call deprecated `Cldr.Config.known_locale_names/1`, call `Cldr.Locale.Loader.known_locale_names/1` instead.
+
 ## Cldr_Lists v2.9.0-rc.2
 
 This is the changelog for Cldr_lists v2.9.0-rc.2 released on October 25th, 2021.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)

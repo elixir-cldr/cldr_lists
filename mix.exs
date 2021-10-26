@@ -1,7 +1,7 @@
 defmodule Cldr.Lists.Mixfile do
   use Mix.Project
 
-  @version "2.9.0-rc.2"
+  @version "2.9.0"
 
   def project do
     [
@@ -38,7 +38,7 @@ defmodule Cldr.Lists.Mixfile do
 
   defp deps do
     [
-      {:ex_cldr_numbers, "~> 2.23-rc"},
+      {:ex_cldr_numbers, "~> 2.23"},
       {:ex_doc, "~> 0.18", optional: true, runtime: false},
       {:jason, "~> 1.0", optional: true},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false}
