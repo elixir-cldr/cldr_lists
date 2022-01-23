@@ -259,7 +259,7 @@ defmodule Cldr.List.Backend do
 
           ## Example
 
-              iex> #{inspect __MODULE__}.list_patterns_for "en"
+              iex> #{inspect __MODULE__}.list_patterns_for(:en)
               %{
                 or: %{
                   2 => [0, " or ", 1],
@@ -330,13 +330,25 @@ defmodule Cldr.List.Backend do
 
           ## Example
 
-              iex> #{inspect __MODULE__}.list_formats_for("en")
+              iex> #{inspect __MODULE__}.list_formats_for(:en)
               [:or, :or_narrow, :or_short, :standard, :standard_narrow, :standard_short,
                :unit, :unit_narrow, :unit_short]
 
           """
           def list_formats_for(unquote(locale_name)) do
             unquote(pattern_names)
+          end
+        end
+
+        def list_patterns_for(locale_name) when is_binary(locale_name) do
+          with {:ok, locale} <- unquote(backend).validate_locale(locale_name) do
+            list_patterns_for(locale.cldr_locale_name)
+          end
+        end
+
+        def list_formats_for(locale_name) when is_binary(locale_name) do
+          with {:ok, locale} <- unquote(backend).validate_locale(locale_name) do
+            list_formats_for(locale.cldr_locale_name)
           end
         end
 
