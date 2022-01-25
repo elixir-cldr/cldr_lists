@@ -21,7 +21,9 @@ defmodule Cldr.List.Backend do
         end
 
         @default_format :standard
+
         alias Cldr.Substitution
+        alias Cldr.Locale
 
         @doc """
         Formats a list into a string according to the list pattern rules for a locale.
@@ -228,7 +230,7 @@ defmodule Cldr.List.Backend do
           end
         end
 
-        @spec verify_format(String.t(), atom()) ::
+        @spec verify_format(Locale.locale_name(), atom()) ::
           {:ok, atom()} | {:error, {module(), String.t()}}
 
         defp verify_format(locale_name, format) do
@@ -240,8 +242,8 @@ defmodule Cldr.List.Backend do
           end
         end
 
-        @spec list_patterns_for(Cldr.Locale.locale_name()) :: map()
-        @spec list_formats_for(Cldr.Locale.locale_name()) :: [atom]
+        @spec list_patterns_for(Locale.locale_name()) :: map()
+        @spec list_formats_for(Locale.locale_name()) :: [atom]
 
         for locale_name <- Cldr.Locale.Loader.known_locale_names(config) do
           patterns =
