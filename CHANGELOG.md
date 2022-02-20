@@ -1,8 +1,16 @@
 # Changelog
 
+## Cldr_Lists v2.10.0
+
+This is the changelog for Cldr_lists v2.10.0 released on February 21st, 2022.  For older changelogs please consult the release tag on [GitHub](https://github.com/elixir-cldr/cldr_lists/tags)
+
+### Enhancements
+
+* Updates to [ex_cldr version 2.26.0](https://hex.pm/packages/ex_cldr/2.26.0) and [ex_cldr_numbers version 2.25.0](https://hex.pm/packages/ex_cldr_numbers/2.25.0) which use atoms for locale names and rbnf locale names. This is consistent with other elements of `t:Cldr.LanguageTag` where atoms are used when the cardinality of the data is fixed and relatively small and strings where the data is free format.
+
 ## Cldr_Lists v2.9.0
 
-This is the changelog for Cldr_lists v2.9.0 released on October 27th, 2021.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
+This is the changelog for Cldr_lists v2.9.0 released on October 27th, 2021.  For older changelogs please consult the release tag on [GitHub](https://github.com/elixir-cldr/cldr_lists/tags)
 
 ### Enhancements
 
@@ -16,7 +24,7 @@ This is the changelog for Cldr_lists v2.9.0 released on October 27th, 2021.  For
 
 ## Cldr_Lists v2.9.0-rc.2
 
-This is the changelog for Cldr_lists v2.9.0-rc.2 released on October 25th, 2021.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
+This is the changelog for Cldr_lists v2.9.0-rc.2 released on October 25th, 2021.  For older changelogs please consult the release tag on [GitHub](https://github.com/elixir-cldr/cldr_lists/tags)
 
 ### Deprecations
 
@@ -24,7 +32,7 @@ This is the changelog for Cldr_lists v2.9.0-rc.2 released on October 25th, 2021.
 
 ## Cldr_Lists v2.9.0-rc.1
 
-This is the changelog for Cldr_lists v2.9.0-rc.1 released on October 24th, 2021.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
+This is the changelog for Cldr_lists v2.9.0-rc.1 released on October 24th, 2021.  For older changelogs please consult the release tag on [GitHub](https://github.com/elixir-cldr/cldr_lists/tags)
 
 ### Deprecations
 
@@ -32,7 +40,7 @@ This is the changelog for Cldr_lists v2.9.0-rc.1 released on October 24th, 2021.
 
 ## Cldr_Lists v2.9.0-rc.1
 
-This is the changelog for Cldr_lists v2.9.0-rc.0 released on October 3rd, 2021.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
+This is the changelog for Cldr_lists v2.9.0-rc.0 released on October 3rd, 2021.  For older changelogs please consult the release tag on [GitHub](https://github.com/elixir-cldr/cldr_lists/tags)
 
 ### Enhancements
 
@@ -40,7 +48,7 @@ This is the changelog for Cldr_lists v2.9.0-rc.0 released on October 3rd, 2021. 
 
 ## Cldr_Lists v2.8.0
 
-This is the changelog for Cldr_lists v2.8.0 released on April 8th, 2021.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
+This is the changelog for Cldr_lists v2.8.0 released on April 8th, 2021.  For older changelogs please consult the release tag on [GitHub](https://github.com/elixir-cldr/cldr_lists/tags)
 
 ### Enhancements
 
@@ -48,7 +56,7 @@ This is the changelog for Cldr_lists v2.8.0 released on April 8th, 2021.  For ol
 
 ## Cldr_Lists v2.7.0
 
-This is the changelog for Cldr_lists v2.7.0 released on November 1st, 2020.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
+This is the changelog for Cldr_lists v2.7.0 released on November 1st, 2020.  For older changelogs please consult the release tag on [GitHub](https://github.com/elixir-cldr/cldr_lists/tags)
 
 ### Enhancements
 
@@ -56,7 +64,7 @@ This is the changelog for Cldr_lists v2.7.0 released on November 1st, 2020.  For
 
 ## Cldr_Lists v2.6.1
 
-This is the changelog for Cldr_lists v2.6.1 released on September 26th, 2020.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
+This is the changelog for Cldr_lists v2.6.1 released on September 26th, 2020.  For older changelogs please consult the release tag on [GitHub](https://github.com/elixir-cldr/cldr_lists/tags)
 
 ### Bug Fixes
 
@@ -64,7 +72,7 @@ This is the changelog for Cldr_lists v2.6.1 released on September 26th, 2020.  F
 
 ## Cldr_Lists v2.6.0
 
-This is the changelog for Cldr_lists v2.6.0 released on July 1st, 2020.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
+This is the changelog for Cldr_lists v2.6.0 released on July 1st, 2020.  For older changelogs please consult the release tag on [GitHub](https://github.com/elixir-cldr/cldr_lists/tags)
 
 ### Enhancements
 
@@ -76,7 +84,7 @@ This is the changelog for Cldr_lists v2.6.0 released on July 1st, 2020.  For old
 
 ## Cldr_Lists v2.5.0
 
-This is the changelog for Cldr_lists v2.5.0 released on May 4th, 2020.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
+This is the changelog for Cldr_lists v2.5.0 released on May 4th, 2020.  For older changelogs please consult the release tag on [GitHub](https://github.com/elixir-cldr/cldr_lists/tags)
 
 ### Enhancements
 
@@ -86,7 +94,7 @@ This is the changelog for Cldr_lists v2.5.0 released on May 4th, 2020.  For olde
 
 ## Cldr_Lists v2.4.0
 
-This is the changelog for Cldr_lists v2.4.0 released on August 31st, 2019.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
+This is the changelog for Cldr_lists v2.4.0 released on August 31st, 2019.  For older changelogs please consult the release tag on [GitHub](https://github.com/elixir-cldr/cldr_lists/tags)
 
 ### Changes and deprecations
 
@@ -96,7 +104,7 @@ This is the changelog for Cldr_lists v2.4.0 released on August 31st, 2019.  For 
 
 ## Cldr_Lists v2.3.0
 
-This is the changelog for Cldr_lists v2.3.0 released on August 29th, 2019.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
+This is the changelog for Cldr_lists v2.3.0 released on August 29th, 2019.  For older changelogs please consult the release tag on [GitHub](https://github.com/elixir-cldr/cldr_lists/tags)
 
 ### Enhancements
 
@@ -104,7 +112,7 @@ This is the changelog for Cldr_lists v2.3.0 released on August 29th, 2019.  For 
 
 ## Cldr_Lists v2.2.2
 
-This is the changelog for Cldr_lists v2.2.2 released on August 23rd, 2019.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
+This is the changelog for Cldr_lists v2.2.2 released on August 23rd, 2019.  For older changelogs please consult the release tag on [GitHub](https://github.com/elixir-cldr/cldr_lists/tags)
 
 ### Bug Fixes
 
@@ -112,7 +120,7 @@ This is the changelog for Cldr_lists v2.2.2 released on August 23rd, 2019.  For 
 
 ## Cldr_Lists v2.2.1
 
-This is the changelog for Cldr_lists v2.2.1 released on August 21st, 2019.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
+This is the changelog for Cldr_lists v2.2.1 released on August 21st, 2019.  For older changelogs please consult the release tag on [GitHub](https://github.com/elixir-cldr/cldr_lists/tags)
 
 ### Bug Fixes
 
@@ -124,7 +132,7 @@ This is the changelog for Cldr_lists v2.2.1 released on August 21st, 2019.  For 
 
 ## Cldr_Lists v2.2.0
 
-This is the changelog for Cldr_lists v2.2.0 released on March 28th, 2019.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
+This is the changelog for Cldr_lists v2.2.0 released on March 28th, 2019.  For older changelogs please consult the release tag on [GitHub](https://github.com/elixir-cldr/cldr_lists/tags)
 
 ### Enhancements
 
@@ -132,7 +140,7 @@ This is the changelog for Cldr_lists v2.2.0 released on March 28th, 2019.  For o
 
 ## Cldr_Lists v2.1.0
 
-This is the changelog for Cldr_lists v2.1.0 released on March 23rd, 2019.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
+This is the changelog for Cldr_lists v2.1.0 released on March 23rd, 2019.  For older changelogs please consult the release tag on [GitHub](https://github.com/elixir-cldr/cldr_lists/tags)
 
 ### Enhancements
 
@@ -140,7 +148,7 @@ This is the changelog for Cldr_lists v2.1.0 released on March 23rd, 2019.  For o
 
 ## Cldr_Lists v2.0.2
 
-This is the changelog for Cldr_lists v2.0.2 released on March 20th, 2019.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
+This is the changelog for Cldr_lists v2.0.2 released on March 20th, 2019.  For older changelogs please consult the release tag on [GitHub](https://github.com/elixir-cldr/cldr_lists/tags)
 
 ### Bug Fixes
 
@@ -148,7 +156,7 @@ This is the changelog for Cldr_lists v2.0.2 released on March 20th, 2019.  For o
 
 ## Cldr_Lists v2.0.1
 
-This is the changelog for Cldr_lists v2.0.1 released on March 15th, 2019.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
+This is the changelog for Cldr_lists v2.0.1 released on March 15th, 2019.  For older changelogs please consult the release tag on [GitHub](https://github.com/elixir-cldr/cldr_lists/tags)
 
 ### Enhancements
 
@@ -166,7 +174,7 @@ end
 
 ## Cldr_Lists v2.0.0
 
-This is the changelog for Cldr_lists v2.0.0 released on November 24th, 2018.  For older changelogs please consult the release tag on [GitHub](https://github.com/kipcole9/cldr_lists/tags)
+This is the changelog for Cldr_lists v2.0.0 released on November 24th, 2018.  For older changelogs please consult the release tag on [GitHub](https://github.com/elixir-cldr/cldr_lists/tags)
 
 ### Enhancements
 
