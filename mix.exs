@@ -38,7 +38,8 @@ defmodule Cldr.Lists.Mixfile do
 
   defp deps do
     [
-      {:ex_cldr_numbers, "~> 2.25"},
+      # {:ex_cldr_numbers, "~> 2.25"},
+      {:ex_cldr_numbers, path: "../cldr_numbers"},
 
       {:ex_doc, "~> 0.18", optional: true, runtime: false},
       {:jason, "~> 1.0", optional: true},
