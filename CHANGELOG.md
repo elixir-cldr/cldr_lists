@@ -90,7 +90,7 @@ This is the changelog for Cldr_lists v2.5.0 released on May 4th, 2020.  For olde
 
 * Add implementation for the `Cldr.Chars` protocol which is used by `Cldr.to_string/1` and which is a drop-in replacement for `Kernel.to_string/1` with added default localization.
 
-* Depends upon [ex_cldr_numbers versin 2.17](https://hex.pm/packages/ex_cldr_numbers/2.17.0) which encapsulates CLDR39 data.
+* Depends upon [ex_cldr_numbers version 2.17](https://hex.pm/packages/ex_cldr_numbers/2.17.0) which encapsulates CLDR39 data.
 
 ## Cldr_Lists v2.4.0
 
