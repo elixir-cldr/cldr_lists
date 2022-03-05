@@ -78,7 +78,7 @@ iex> MyApp.Cldr.List.intersperse(["a", "b", "c"], locale: "en")
 
 ### List Formats
 
-List formats are referred to by a pattern style the standardises the way to refernce different formats in a locale.  See `MyApp.Cldr.List.list_formats_for/1`.  For example:
+List formats are referred to by a pattern style the standardises the way to reference different formats in a locale.  See `MyApp.Cldr.List.list_formats_for/1`.  For example:
 
 ```elixir
 iex> MyApp.Cldr.List.list_formats_for "en"
