@@ -3,7 +3,7 @@ require Cldr.List.Backend
 defmodule MyApp.Cldr do
   use Cldr,
     default_locale: "en",
-    locales: ["und", "fr", "zh", "en", "bs", "pl", "ru", "th", "he"],
+    locales: ["und", "fr", "zh", "en", "bs", "pl", "ru", "th", "he", "da"],
     providers: [Cldr.List]
 end
 

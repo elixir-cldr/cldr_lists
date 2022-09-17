@@ -43,6 +43,12 @@ defmodule Cldr.List.Test do
         List.to_string!([1, 2, 3], MyApp.Cldr, format: :jabberwocky)
       end
     end
+
+    test "that a list can be formatted in a locale option" do
+      assert List.to_string([1, 2], MyApp.Cldr, locale: :fr) == {:ok, "1 et 2"}
+      assert MyApp.Cldr.List.to_string([1, 2], locale: "fr") == {:ok, "1 et 2"}
+      assert MyApp.Cldr.List.to_string([1, 2], locale: "da") == {:ok, "1 og 2"}
+    end
   end
 
   describe "intersperse/2" do
