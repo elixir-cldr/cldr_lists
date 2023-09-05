@@ -1,4 +1,14 @@
+
 # Changelog
+
+
+## Cldr_Lists v2.10.1
+
+This is the changelog for Cldr_lists v2.10.1 released on September 6th, 2023.  For older changelogs please consult the release tag on [GitHub](https://github.com/elixir-cldr/cldr_lists/tags)
+
+### Bug Fixes
+
+* Fix tests that depended on map key order.
 
 ## Cldr_Lists v2.10.0
 
