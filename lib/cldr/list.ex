@@ -293,7 +293,9 @@ defmodule Cldr.List do
   @root_locale Cldr.Config.root_locale_name()
   @config %Cldr.Config{locales: [@root_locale]}
   @known_list_formats Cldr.Locale.Loader.get_locale(@root_locale, @config)
-    |> Map.get(:list_formats) |> Map.keys
+    |> Map.get(:list_formats)
+    |> Map.keys
+    |> Enum.sort()
 
   def known_list_formats do
     @known_list_formats

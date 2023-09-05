@@ -251,7 +251,9 @@ defmodule Cldr.List.Backend do
             |> Cldr.Locale.Loader.get_locale(config)
             |> Map.get(:list_formats)
 
-          pattern_names = Map.keys(patterns)
+          pattern_names =
+            Map.keys(patterns)
+            |> Enum.sort()
 
           @doc """
           Returns the list patterns for a locale.
