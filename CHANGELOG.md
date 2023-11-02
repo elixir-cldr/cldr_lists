@@ -1,6 +1,12 @@
-
 # Changelog
 
+## Cldr_Lists v2.10.2
+
+This is the changelog for Cldr_lists v2.10.2 released on November 2nd, 2023.  For older changelogs please consult the release tag on [GitHub](https://github.com/elixir-cldr/cldr_lists/tags)
+
+### Bug Fixes
+
+* Fix compiler warnings on Elixir 1.16.
 
 ## Cldr_Lists v2.10.1
 

@@ -1,7 +1,7 @@
 defmodule Cldr.Lists.Mixfile do
   use Mix.Project
 
-  @version "2.10.1"
+  @version "2.10.2"
 
   def project do
     [
@@ -13,7 +13,7 @@ defmodule Cldr.Lists.Mixfile do
       source_url: "https://github.com/elixir-cldr/cldr_lists",
       description: description(),
       package: package(),
-      start_permanent: Mix.env == :prod,
+      start_permanent: Mix.env() == :prod,
       deps: deps(),
       elixirc_paths: elixirc_paths(Mix.env()),
       dialyzer: [
