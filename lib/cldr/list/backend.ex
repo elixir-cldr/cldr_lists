@@ -39,8 +39,9 @@ defmodule Cldr.List.Backend do
         * `:locale` is any configured locale. See . The default
           is `#{inspect backend}.known_locale_names/0`.
 
-        * `:format` is one of those returned by
-          `Cldr.List.known_list_formats/0`. The default is `format: :standard`
+        * `:format` is any of those returned by
+          `Cldr.List.known_list_formats/0` or by `Cldr.List.Pattern.new/1`.
+          The default is `format: :standard`.
 
         ## Examples
 
@@ -119,8 +120,9 @@ defmodule Cldr.List.Backend do
         * `:locale` is any configured locale. See . The default
           is `#{inspect backend}.known_locale_names/0`.
 
-        * `:format` is one of those returned by
-          `Cldr.List.known_list_formats/0`. The default is `format: :standard`
+        * `:format` is any of those returned by
+          `Cldr.List.known_list_formats/0` or by `Cldr.List.Pattern.new/1`.
+          The default is `format: :standard`.
 
         ## Examples
 
@@ -153,44 +155,40 @@ defmodule Cldr.List.Backend do
         end
 
         def intersperse(list, options) do
-          with {:ok, locale, format} <- normalize_options(options) do
+          with {:ok, locale, pattern} <- normalize_options(options) do
             list =
               list
-              |> intersperse(locale, format)
-              |> :'Elixir.List'.flatten
+              |> intersperse(locale, pattern)
+              |> Elixir.List.flatten
 
             {:ok, list}
           end
         end
 
         # For when the list is empty
-        def intersperse([], _locale, _pattern_type) do
+        def intersperse([], _locale, _pattern) do
           []
         end
 
         # For when there is one element only
-        def intersperse([first], _locale, _pattern_type) do
+        def intersperse([first], _locale, _pattern) do
           [first]
         end
 
         # For when there are two elements only
-        def intersperse([first, last], locale, pattern_type) do
-          pattern = list_patterns_for(locale.cldr_locale_name)[pattern_type][2]
-          Substitution.substitute([first, last], pattern)
+        def intersperse([first, last], locale, pattern) do
+          Substitution.substitute([first, last], pattern.two)
         end
 
         # For when there are three elements only
-        def intersperse([first, middle, last], locale, pattern_type) do
-          first_pattern = list_patterns_for(locale.cldr_locale_name)[pattern_type][:start]
-          last_pattern = list_patterns_for(locale.cldr_locale_name)[pattern_type][:end]
-          last = Substitution.substitute([middle, last], last_pattern)
-          Substitution.substitute([first, last], first_pattern)
+        def intersperse([first, middle, last], locale, pattern) do
+          last = Substitution.substitute([middle, last], pattern.end)
+          Substitution.substitute([first, last], pattern.start)
         end
 
         # For when there are more than 3 elements
-        def intersperse([first | rest], locale, pattern_type) do
-          first_pattern = list_patterns_for(locale.cldr_locale_name)[pattern_type][:start]
-          Substitution.substitute([first, intersperse(rest, locale, pattern_type)], first_pattern)
+        def intersperse([first | rest], locale, pattern) do
+          Substitution.substitute([first, intersperse(rest, locale, pattern)], pattern.start)
         end
 
         @doc """
@@ -225,17 +223,21 @@ defmodule Cldr.List.Backend do
           format = options[:format] || options[:style] || @default_format
 
           with {:ok, locale} <- unquote(backend).validate_locale(locale),
-               {:ok, _} <- verify_format(locale.cldr_locale_name, format) do
-            {:ok, locale, format}
+               {:ok, pattern} <- verify_format(locale.cldr_locale_name, format) do
+            {:ok, locale, pattern}
           end
         end
 
-        @spec verify_format(Locale.locale_name(), atom()) ::
+        @spec verify_format(Locale.locale_name(), atom() | Cldr.List.Pattner.t()) ::
           {:ok, atom()} | {:error, {module(), String.t()}}
 
+        defp verify_format(_locale_name, %Cldr.List.Pattern{} = pattern) do
+          {:ok, pattern}
+        end
+
         defp verify_format(locale_name, format) do
-          if format in list_formats_for(locale_name) do
-            {:ok, format}
+          if pattern = Map.get(list_patterns_for(locale_name), format) do
+            {:ok, pattern}
           else
             {:error,
              {Cldr.UnknownFormatError, "The list format #{inspect(format)} is not known."}}
@@ -250,6 +252,15 @@ defmodule Cldr.List.Backend do
             locale_name
             |> Cldr.Locale.Loader.get_locale(config)
             |> Map.get(:list_formats)
+            |> Enum.map(fn {k, v} ->
+              patterns =
+                Cldr.List.Pattern
+                |> struct(v)
+                |> Map.put(:two, Map.fetch!(v, 2))
+
+              {k, patterns}
+            end)
+            |> Map.new()
 
           pattern_names =
             Map.keys(patterns)
@@ -265,56 +276,56 @@ defmodule Cldr.List.Backend do
 
               iex> #{inspect __MODULE__}.list_patterns_for(:en)
               %{
-                or: %{
-                  2 => [0, " or ", 1],
+                or: %Cldr.List.Pattern{
+                  two: [0, " or ", 1],
                   end: [0, ", or ", 1],
                   middle: [0, ", ", 1],
                   start: [0, ", ", 1]
                 },
-                or_narrow: %{
-                  2 => [0, " or ", 1],
+                or_narrow: %Cldr.List.Pattern{
+                  two: [0, " or ", 1],
                   end: [0, ", or ", 1],
                   middle: [0, ", ", 1],
                   start: [0, ", ", 1]
                 },
-                or_short: %{
-                  2 => [0, " or ", 1],
+                or_short: %Cldr.List.Pattern{
+                  two: [0, " or ", 1],
                   end: [0, ", or ", 1],
                   middle: [0, ", ", 1],
                   start: [0, ", ", 1]
                 },
-                standard: %{
-                  2 => [0, " and ", 1],
+                standard: %Cldr.List.Pattern{
+                  two: [0, " and ", 1],
                   end: [0, ", and ", 1],
                   middle: [0, ", ", 1],
                   start: [0, ", ", 1]
                 },
-                standard_narrow: %{
-                  2 => [0, ", ", 1],
+                standard_narrow: %Cldr.List.Pattern{
+                  two: [0, ", ", 1],
                   end: [0, ", ", 1],
                   middle: [0, ", ", 1],
                   start: [0, ", ", 1]
                 },
-                standard_short: %{
-                  2 => [0, " & ", 1],
+                standard_short: %Cldr.List.Pattern{
+                  two: [0, " & ", 1],
                   end: [0, ", & ", 1],
                   middle: [0, ", ", 1],
                   start: [0, ", ", 1]
                 },
-                unit: %{
-                  2 => [0, ", ", 1],
+                unit: %Cldr.List.Pattern{
+                  two: [0, ", ", 1],
                   end: [0, ", ", 1],
                   middle: [0, ", ", 1],
                   start: [0, ", ", 1]
                 },
-                unit_narrow: %{
-                  2 => [0, " ", 1],
+                unit_narrow: %Cldr.List.Pattern{
+                  two: [0, " ", 1],
                   end: [0, " ", 1],
                   middle: [0, " ", 1],
                   start: [0, " ", 1]
                 },
-                unit_short: %{
-                  2 => [0, ", ", 1],
+                unit_short: %Cldr.List.Pattern{
+                  two: [0, ", ", 1],
                   end: [0, ", ", 1],
                   middle: [0, ", ", 1],
                   start: [0, ", ", 1]

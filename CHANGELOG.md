@@ -1,5 +1,13 @@
 # Changelog
 
+## Cldr_Lists v2.11.0
+
+This is the changelog for Cldr_lists v2.11.0 released on March 15th, 2023.  For older changelogs please consult the release tag on [GitHub](https://github.com/elixir-cldr/cldr_lists/tags)
+
+### Enhancements
+
+* Introduces `Cldr.List.Pattnern.new/1` to support user-defined list formatting patterns.
+
 ## Cldr_Lists v2.10.2
 
 This is the changelog for Cldr_lists v2.10.2 released on November 2nd, 2023.  For older changelogs please consult the release tag on [GitHub](https://github.com/elixir-cldr/cldr_lists/tags)

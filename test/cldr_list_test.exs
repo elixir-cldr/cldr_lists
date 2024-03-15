@@ -86,6 +86,26 @@ defmodule Cldr.List.Test do
     end
   end
 
+  describe "Cldr.List.Pattern.new/1" do
+    test "Define a pattern with only :start" do
+      assert {:ok, _} = Cldr.List.Pattern.new(start: "{0}, {1}")
+    end
+
+    test "Define a pattern with all options" do
+      assert {:ok, _} = Cldr.List.Pattern.new(start: "{0}, {1}", middle: "{0}, {1}"), end: "{0} and {1}", two: "{0} and {1}"
+    end
+
+    test "Invalid options" do
+      assert {:error, _} = Cldr.List.Pattern.new(start: "string with no placeholder")
+      assert {:error, _} = Cldr.List.Pattern.new(unknown: "something")
+    end
+  end
+
+  describe "to_string/2 with a pattern parameter" do
+    {:ok, pattern} = Cldr.List.Pattern.new(start: "{0}, {1}", middle: "{0}, {1}", end: "{0} and {1}", two: "{0} and {1}")
+    {:ok, "one, two, three and four"} = Cldr.List.to_string(["one", "two", "three", "four"], format: pattern)
+  end
+
   if function_exported?(Code, :fetch_docs, 1) do
     describe "doc generation" do
       test "that no module docs are generated for a backend" do

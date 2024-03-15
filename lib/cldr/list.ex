@@ -18,27 +18,28 @@ defmodule Cldr.List do
 
   ## Arguments
 
-  * `list` is any list of of terms that can be passed through `Kernel.to_string/1`
+  * `list` is any list of of terms that can be passed through `Kernel.to_string/1`.
 
-  * `options` is a keyword list
+  * `options` is a keyword list.
 
   ## Options
 
   * `:locale` is any configured locale. See `Cldr.known_locales()`. The default
     is `locale: Cldr.get_locale/1`
 
-  * `:format` is one of those returned by
-    `Cldr.List.known_list_formats/0`. The default is `format: :standard`
+  * `:format` is any of those returned by
+    `Cldr.List.known_list_formats/0` or by `Cldr.List.Pattern.new/1`.
+    The default is `format: :standard`.
 
   ## Examples
 
-      iex> Cldr.List.to_string(["a", "b", "c"], MyApp.Cldr, locale: "en")
+      iex> Cldr.List.to_string(["a", "b", "c"], MyApp.Cldr, locale: :en)
       {:ok, "a, b, and c"}
 
-      iex> Cldr.List.to_string(["a", "b", "c"], MyApp.Cldr, locale: "en", format: :unit_narrow)
+      iex> Cldr.List.to_string(["a", "b", "c"], MyApp.Cldr, locale: :en, format: :unit_narrow)
       {:ok, "a b c"}
 
-      iex> Cldr.List.to_string(["a", "b", "c"], MyApp.Cldr, locale: "fr")
+      iex> Cldr.List.to_string(["a", "b", "c"], MyApp.Cldr, locale: :fr)
       {:ok, "a, b et c"}
 
       iex> Cldr.List.to_string([1,2,3,4,5,6], MyApp.Cldr)
@@ -99,7 +100,7 @@ defmodule Cldr.List do
   pattern rules for a locale.
 
   This function can be helpful when creating a list from `Phoenix`
-  safe strings which are of the format `{:safe, "some string"}`
+  safe strings which are of the format `{:safe, "some string"}`.
 
   ## Arguments
 
@@ -110,20 +111,21 @@ defmodule Cldr.List do
   ## Options
 
   * `:locale` is any configured locale. See `Cldr.known_locale_names/1`. The default
-    is `locale: Cldr.get_locale/1`
+    is `locale: Cldr.get_locale/1`.
 
-  * `:format` is atom returned by
-    `Cldr.List.known_list_formats/0`. The default is `:standard`
+  * `:format` is any of those returned by
+    `Cldr.List.known_list_formats/0` or by `Cldr.List.Pattern.new/1`.
+    The default is `format: :standard`.
 
   ## Examples
 
-      iex> Cldr.List.intersperse(["a", "b", "c"], MyApp.Cldr, locale: "en")
+      iex> Cldr.List.intersperse(["a", "b", "c"], MyApp.Cldr, locale: :en)
       {:ok, ["a", ", ", "b", ", and ", "c"]}
 
-      iex> Cldr.List.intersperse(["a", "b", "c"], MyApp.Cldr, locale: "en", format: :unit_narrow)
+      iex> Cldr.List.intersperse(["a", "b", "c"], MyApp.Cldr, locale: :en, format: :unit_narrow)
       {:ok, ["a", " ", "b", " ", "c"]}
 
-      iex> Cldr.List.intersperse(["a", "b", "c"], MyApp.Cldr, locale: "fr")
+      iex> Cldr.List.intersperse(["a", "b", "c"], MyApp.Cldr, locale: :fr)
       {:ok, ["a", ", ", "b", " et ", "c"]}
 
       iex> Cldr.List.intersperse([1,2,3,4,5,6], MyApp.Cldr)
@@ -160,10 +162,10 @@ defmodule Cldr.List do
 
   ## Examples
 
-      iex> Cldr.List.intersperse!(["a", "b", "c"], MyApp.Cldr, locale: "en")
+      iex> Cldr.List.intersperse!(["a", "b", "c"], MyApp.Cldr, locale: :en)
       ["a", ", ", "b", ", and ", "c"]
 
-      iex> Cldr.List.intersperse!(["a", "b", "c"], MyApp.Cldr, locale: "en", format: :unit_narrow)
+      iex> Cldr.List.intersperse!(["a", "b", "c"], MyApp.Cldr, locale: :en, format: :unit_narrow)
       ["a", " ", "b", " ", "c"]
 
   """
@@ -184,58 +186,58 @@ defmodule Cldr.List do
 
   ## Example
 
-      iex> Cldr.List.list_patterns_for "en", MyApp.Cldr
+      iex> Cldr.List.list_patterns_for(:en, MyApp.Cldr)
       %{
-        or: %{
-          2 => [0, " or ", 1],
+        or: %Cldr.List.Pattern{
+          two: [0, " or ", 1],
           end: [0, ", or ", 1],
           middle: [0, ", ", 1],
           start: [0, ", ", 1]
         },
-        or_narrow: %{
-          2 => [0, " or ", 1],
+        or_narrow: %Cldr.List.Pattern{
+          two: [0, " or ", 1],
           end: [0, ", or ", 1],
           middle: [0, ", ", 1],
           start: [0, ", ", 1]
         },
-        or_short: %{
-          2 => [0, " or ", 1],
+        or_short: %Cldr.List.Pattern{
+          two: [0, " or ", 1],
           end: [0, ", or ", 1],
           middle: [0, ", ", 1],
           start: [0, ", ", 1]
         },
-        standard: %{
-          2 => [0, " and ", 1],
+        standard: %Cldr.List.Pattern{
+          two: [0, " and ", 1],
           end: [0, ", and ", 1],
           middle: [0, ", ", 1],
           start: [0, ", ", 1]
         },
-        standard_narrow: %{
-          2 => [0, ", ", 1],
+        standard_narrow: %Cldr.List.Pattern{
+          two: [0, ", ", 1],
           end: [0, ", ", 1],
           middle: [0, ", ", 1],
           start: [0, ", ", 1]
         },
-        standard_short: %{
-          2 => [0, " & ", 1],
+        standard_short: %Cldr.List.Pattern{
+          two: [0, " & ", 1],
           end: [0, ", & ", 1],
           middle: [0, ", ", 1],
           start: [0, ", ", 1]
         },
-        unit: %{
-          2 => [0, ", ", 1],
+        unit: %Cldr.List.Pattern{
+          two: [0, ", ", 1],
           end: [0, ", ", 1],
           middle: [0, ", ", 1],
           start: [0, ", ", 1]
         },
-        unit_narrow: %{
-          2 => [0, " ", 1],
+        unit_narrow: %Cldr.List.Pattern{
+          two: [0, " ", 1],
           end: [0, " ", 1],
           middle: [0, " ", 1],
           start: [0, " ", 1]
         },
-        unit_short: %{
-          2 => [0, ", ", 1],
+        unit_short: %Cldr.List.Pattern{
+          two: [0, ", ", 1],
           end: [0, ", ", 1],
           middle: [0, ", ", 1],
           start: [0, ", ", 1]
