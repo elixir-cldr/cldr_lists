@@ -9,6 +9,15 @@ defmodule Cldr.List.Pattern do
 
   defstruct [:start, :middle, :end, :two]
 
+  @type pattern :: [non_neg_integer() | String.t(), ...]
+
+  @type t :: %__MODULE__{
+    start: pattern(),
+    middle: pattern(),
+    end: pattern(),
+    two: pattern()
+  }
+
   @valid_options [:start, :middle, :end, :two]
 
   @doc """

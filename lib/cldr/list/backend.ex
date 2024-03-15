@@ -228,7 +228,7 @@ defmodule Cldr.List.Backend do
           end
         end
 
-        @spec verify_format(Locale.locale_name(), atom() | Cldr.List.Pattner.t()) ::
+        @spec verify_format(Locale.locale_name(), atom() | Cldr.List.Pattern.t()) ::
           {:ok, atom()} | {:error, {module(), String.t()}}
 
         defp verify_format(_locale_name, %Cldr.List.Pattern{} = pattern) do
