@@ -9,6 +9,7 @@ defmodule Cldr.List do
       {:ok, "Monday, Tuesday, and Wednesday"}
 
   """
+  alias Cldr.Locale
 
   @type pattern_type :: :or | :or_narrow | :or_short | :standard | :standard_narrow |
                         :standard_short | :unit | :unit_narrow | :unit_short
@@ -245,6 +246,8 @@ defmodule Cldr.List do
       }
 
   """
+  @spec list_patterns_for(Locale.locale_name(), Cldr.backend() | nil) ::
+      map() | {:error, {module, String.t()}}
 
   def list_patterns_for(locale, backend \\ default_backend()) do
     {locale, backend} = Cldr.locale_and_backend_from(locale, backend)
@@ -266,6 +269,8 @@ defmodule Cldr.List do
         :standard_short, :unit, :unit_narrow, :unit_short]
 
   """
+  @spec list_formats_for(Locale.locale_name(), Cldr.backend() | nil) ::
+      [atom] | {:error, {module, String.t()}}
 
   def list_formats_for(locale, backend \\ nil) do
     {locale, backend} = Cldr.locale_and_backend_from(locale, backend)
