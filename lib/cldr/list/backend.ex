@@ -244,8 +244,8 @@ defmodule Cldr.List.Backend do
           end
         end
 
-        @spec list_patterns_for(Locale.locale_name()) :: map()
-        @spec list_formats_for(Locale.locale_name()) :: [atom]
+        @spec list_patterns_for(Locale.locale_name()) :: map() | {:error, {module, String.t()}}
+        @spec list_formats_for(Locale.locale_name()) :: [atom] | {:error, {module, String.t()}}
 
         for locale_name <- Cldr.Locale.Loader.known_locale_names(config) do
           patterns =

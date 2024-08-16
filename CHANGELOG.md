@@ -1,5 +1,15 @@
 # Changelog
 
+**Note that `ex_cldr_lists` version 2.11.1 and later are supported on Elixir 1.12 and later only.**
+
+## Cldr_Lists v2.11.1
+
+This is the changelog for Cldr_lists v2.11.1 released on August 16th, 2023.  For older changelogs please consult the release tag on [GitHub](https://github.com/elixir-cldr/cldr_lists/tags)
+
+### Bug Fixes
+
+* Fix specs to suport dialyzer flags `:error_handling, :unknown, :underspecs, :extra_return, :missing_return`
+
 ## Cldr_Lists v2.11.0
 
 This is the changelog for Cldr_lists v2.11.0 released on March 15th, 2023.  For older changelogs please consult the release tag on [GitHub](https://github.com/elixir-cldr/cldr_lists/tags)

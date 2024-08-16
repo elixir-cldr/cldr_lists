@@ -1,14 +1,14 @@
 defmodule Cldr.Lists.Mixfile do
   use Mix.Project
 
-  @version "2.11.0"
+  @version "2.11.1"
 
   def project do
     [
       app: :ex_cldr_lists,
       version: @version,
       docs: docs(),
-      elixir: "~> 1.10",
+      elixir: "~> 1.12",
       name: "Cldr Lists",
       source_url: "https://github.com/elixir-cldr/cldr_lists",
       description: description(),
@@ -18,7 +18,14 @@ defmodule Cldr.Lists.Mixfile do
       elixirc_paths: elixirc_paths(Mix.env()),
       dialyzer: [
         ignore_warnings: ".dialyzer_ignore_warnings",
-        plt_add_apps: ~w(inets jason mix)a
+        plt_add_apps: ~w(inets jason mix)a,
+        flags: [
+          :error_handling,
+          :unknown,
+          :underspecs,
+          :extra_return,
+          :missing_return
+        ]
       ],
     ]
   end
