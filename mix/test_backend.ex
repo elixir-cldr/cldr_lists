@@ -1,9 +1,9 @@
-require Cldr.List.Backend
+{:module, _} = Code.ensure_compiled(Cldr.List.Backend)
 
 defmodule MyApp.Cldr do
   use Cldr,
     default_locale: "en",
-    locales: ["und", "fr", "zh", "en", "bs", "pl", "ru", "th", "he", "da"],
+    locales: ["und", "fr", "zh", "en", "bs", "pl", "ru", "th", "he", "da", "es-US", "es"],
     providers: [Cldr.List]
 end
 

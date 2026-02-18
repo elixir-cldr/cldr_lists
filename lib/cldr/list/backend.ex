@@ -43,6 +43,13 @@ defmodule Cldr.List.Backend do
           `Cldr.List.known_list_formats/0` or by `Cldr.List.Pattern.new/1`.
           The default is `format: :standard`.
 
+        * `:treat_middle_as_end` is a boolean value indicating whether, when
+          formatting the last element of a list, to use the `:end` pattern (which
+          typically includes a localized " and " pattern) or to use the `:middle`
+          pattern which does not include such a pattern. The default is `false`
+          meaning "use the :end pattern". Note that this option is effective
+          only when the list contains three or more element.
+
         ## Examples
 
             iex> #{inspect __MODULE__}.to_string(["a", "b", "c"], locale: "en")
@@ -103,7 +110,7 @@ defmodule Cldr.List.Backend do
         end
 
         @doc """
-        Intersperces a list elements into a list format according to the list
+        Intersperses a list elements into a list format according to the list
         pattern rules for a locale.
 
         This function can be helpful when creating a list from `Phoenix`
@@ -123,6 +130,13 @@ defmodule Cldr.List.Backend do
         * `:format` is any of those returned by
           `Cldr.List.known_list_formats/0` or by `Cldr.List.Pattern.new/1`.
           The default is `format: :standard`.
+
+        * `:treat_middle_as_end` is a boolean value indicating whether, when
+          formatting the last element of a list, to use the `:end` pattern (which
+          typically includes a localized " and " pattern) or to use the `:middle`
+          pattern which does not include such a pattern. The default is `false`
+          meaning "use the :end pattern". Note that this option is effective
+          only when the list contains three or more element.
 
         ## Examples
 
@@ -155,40 +169,46 @@ defmodule Cldr.List.Backend do
         end
 
         def intersperse(list, options) do
-          with {:ok, locale, pattern} <- normalize_options(options) do
+          with {:ok, locale, pattern, middle_as_end?} <- normalize_options(options) do
             list =
               list
-              |> intersperse(locale, pattern)
-              |> Elixir.List.flatten
+              |> intersperse(locale, pattern, middle_as_end?)
+              |> Elixir.List.flatten()
 
             {:ok, list}
           end
         end
 
         # For when the list is empty
-        def intersperse([], _locale, _pattern) do
+        defp intersperse([], _locale, _pattern, _middle_as_end?) do
           []
         end
 
         # For when there is one element only
-        def intersperse([first], _locale, _pattern) do
+        defp intersperse([first], _locale, _pattern, _middle_as_end?) do
           [first]
         end
 
         # For when there are two elements only
-        def intersperse([first, last], locale, pattern) do
+        defp intersperse([first, last], locale, pattern, _middle_as_end?) do
           Substitution.substitute([first, last], pattern.two)
         end
 
         # For when there are three elements only
-        def intersperse([first, middle, last], locale, pattern) do
+        defp intersperse([first, middle, last], locale, pattern, false = middle_as_end?) do
           last = Substitution.substitute([middle, last], pattern.end)
           Substitution.substitute([first, last], pattern.start)
         end
 
+        defp intersperse([first, middle, last], locale, pattern, true = middle_as_end?) do
+          last = Substitution.substitute([middle, last], pattern.middle)
+          Substitution.substitute([first, last], pattern.start)
+        end
+
         # For when there are more than 3 elements
-        def intersperse([first | rest], locale, pattern) do
-          Substitution.substitute([first, intersperse(rest, locale, pattern)], pattern.start)
+        defp intersperse([first | rest], locale, pattern, middle_as_end?) do
+          remaining = intersperse(rest, locale, pattern, middle_as_end?)
+          Substitution.substitute([first, remaining], pattern.start)
         end
 
         @doc """
@@ -221,10 +241,11 @@ defmodule Cldr.List.Backend do
         defp normalize_options(options) do
           locale = options[:locale] || unquote(backend).get_locale()
           format = options[:format] || options[:style] || @default_format
+          middle_as_end? = !!options[:treat_middle_as_end]
 
           with {:ok, locale} <- unquote(backend).validate_locale(locale),
                {:ok, pattern} <- verify_format(locale.cldr_locale_name, format) do
-            {:ok, locale, pattern}
+            {:ok, locale, pattern, middle_as_end?}
           end
         end
 

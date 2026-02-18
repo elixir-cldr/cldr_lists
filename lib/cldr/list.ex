@@ -25,12 +25,19 @@ defmodule Cldr.List do
 
   ## Options
 
-  * `:locale` is any configured locale. See `Cldr.known_locales()`. The default
+  * `:locale` is any configured locale. See `Cldr.known_locale_names/0`. The default
     is `locale: Cldr.get_locale/1`
 
   * `:format` is any of those returned by
     `Cldr.List.known_list_formats/0` or by `Cldr.List.Pattern.new/1`.
     The default is `format: :standard`.
+
+  * `:treat_middle_as_end` is a boolean value indicating whether, when
+    formatting the last element of a list, to use the `:end` pattern (which
+    typically includes a localized " and " pattern) or to use the `:middle`
+    pattern which does not include such a pattern. The default is `false`
+    meaning "use the :end pattern". Note that this option is effective
+    only when the list contains three or more element.
 
   ## Examples
 
@@ -97,7 +104,7 @@ defmodule Cldr.List do
   end
 
   @doc """
-  Intersperces a list elements into a list format according to the list
+  Intersperses a list elements into a list format according to the list
   pattern rules for a locale.
 
   This function can be helpful when creating a list from `Phoenix`
@@ -105,9 +112,10 @@ defmodule Cldr.List do
 
   ## Arguments
 
-  * `list` is any list of of terms
+  * `list` is any list of of terms where each term can be applied
+    to `Kernel.to_string/1`.
 
-  * `options` is a keyword list
+  * `options` is a keyword list.
 
   ## Options
 
@@ -117,6 +125,13 @@ defmodule Cldr.List do
   * `:format` is any of those returned by
     `Cldr.List.known_list_formats/0` or by `Cldr.List.Pattern.new/1`.
     The default is `format: :standard`.
+
+  * `:treat_middle_as_end` is a boolean value indicating whether, when
+    formatting the last element of a list, to use the `:end` pattern (which
+    typically includes a localized " and " pattern) or to use the `:middle`
+    pattern which does not include such a pattern. The default is `false`
+    meaning "use the :end pattern". Note that this option is effective
+    only when the list contains three or more element.
 
   ## Examples
 

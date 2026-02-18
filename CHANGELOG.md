@@ -2,6 +2,14 @@
 
 **Note that `ex_cldr_lists` version 2.11.1 and later are supported on Elixir 1.12 and later only.**
 
+## Cldr_Lists v2.12.0
+
+This is the changelog for Cldr_lists v2.12.0 released on February 19th, 2026.  For older changelogs please consult the release tag on [GitHub](https://github.com/elixir-cldr/cldr_lists/tags)
+
+### Enhancements
+
+* Adds `:treat_middle_as_end` boolean option to `Cldr.List.to_string/3` and `Cldr.List.intersperse/3`. When `true`, the `:end` part of a list pattern is ignored when formatting a list with three or more elements. This can be a convenient way to format a list omitting the trailing " and " pattern for the last element.
+
 ## Cldr_Lists v2.11.1
 
 This is the changelog for Cldr_lists v2.11.1 released on August 16th, 2023.  For older changelogs please consult the release tag on [GitHub](https://github.com/elixir-cldr/cldr_lists/tags)

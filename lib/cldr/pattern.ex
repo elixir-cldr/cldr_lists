@@ -1,7 +1,7 @@
 defmodule Cldr.List.Pattern do
   @moduledoc """
   A list pattern drives list formatting and it defines how to combine
-  list elements at the begging, in the middle and at the end of
+  list elements at the beggining, in the middle and at the end of
   a list. It also has a special pattern used when the list contains
   only two elements.
 
@@ -74,12 +74,20 @@ defmodule Cldr.List.Pattern do
   ## Example
 
       iex> Cldr.List.Pattern.new(
-      ...>   start: "{0}, {1}"),
-      ...>   middle: "{0}, {1}"),
-      ...>   end: "{0} and {1}"),
-      ...>   two: "{0} and {1}")
+      ...>   start: "{0}, {1}",
+      ...>   middle: "{0}, {1}",
+      ...>   end: "{0} and {1}",
+      ...>   two: "{0} and {1}"
       ...>  )
-      {:ok, _pattern}
+      {
+        :ok,
+        %Cldr.List.Pattern{
+          end: [0, " and ", 1],
+          middle: [0, ", ", 1],
+          start: [0, ", ", 1],
+          two: [0, " and ", 1]
+        }
+      }
 
   """
   def new(options) when is_list(options) do
