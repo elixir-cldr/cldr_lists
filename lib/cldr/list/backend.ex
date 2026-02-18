@@ -236,7 +236,7 @@ defmodule Cldr.List.Backend do
         end
 
         @spec normalize_options(Keyword.t()) ::
-          {:ok, LanguageTag.t(), atom()} | {:error, {module(), String.t()}}
+          {:ok, LanguageTag.t(), atom(), boolean()} | {:error, {module(), String.t()}}
 
         defp normalize_options(options) do
           locale = options[:locale] || unquote(backend).get_locale()
