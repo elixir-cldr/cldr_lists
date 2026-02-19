@@ -158,6 +158,12 @@ defmodule Cldr.List.Backend do
             iex> #{inspect __MODULE__}.intersperse([1,2])
             {:ok, [1, " and ", 2]}
 
+            iex> #{inspect __MODULE__}.intersperse([1,2], treat_middle_as_end: true)
+            {:ok, [1, ", ", 2]}
+
+            iex> #{inspect __MODULE__}.intersperse([1,2], treat_middle_as_end: false)
+            {:ok, [1, " and ", 2]}
+
         """
         @spec intersperse(list(term()), Keyword.t()) ::
                 {:ok, list()} | {:error, {module(), String.t()}}
@@ -190,8 +196,12 @@ defmodule Cldr.List.Backend do
         end
 
         # For when there are two elements only
-        defp intersperse([first, last], locale, pattern, _middle_as_end?) do
+        defp intersperse([first, last], locale, pattern, false = middle_as_end?) do
           Substitution.substitute([first, last], pattern.two)
+        end
+
+        defp intersperse([first, last], locale, pattern, true = middle_as_end?) do
+          Substitution.substitute([first, last], pattern.start)
         end
 
         # For when there are three elements only
