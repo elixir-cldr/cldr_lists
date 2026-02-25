@@ -112,8 +112,7 @@ defmodule Cldr.List do
 
   ## Arguments
 
-  * `list` is any list of of terms where each term can be applied
-    to `Kernel.to_string/1`.
+  * `list` is any list of of terms.
 
   * `options` is a keyword list.
 
