@@ -386,13 +386,13 @@ defmodule Cldr.List.Backend do
           end
         end
 
-        def list_patterns_for(locale_name) when is_binary(locale_name) do
+        def list_patterns_for(locale_name) do
           with {:ok, locale} <- unquote(backend).validate_locale(locale_name) do
             list_patterns_for(locale.cldr_locale_name)
           end
         end
 
-        def list_formats_for(locale_name) when is_binary(locale_name) do
+        def list_formats_for(locale_name) do
           with {:ok, locale} <- unquote(backend).validate_locale(locale_name) do
             list_formats_for(locale.cldr_locale_name)
           end
