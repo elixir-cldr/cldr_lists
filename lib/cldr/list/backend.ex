@@ -246,7 +246,7 @@ defmodule Cldr.List.Backend do
         end
 
         @spec normalize_options(Keyword.t()) ::
-          {:ok, LanguageTag.t(), atom(), boolean()} | {:error, {module(), String.t()}}
+          {:ok, LanguageTag.t(), Cldr.List.Pattern.t(), boolean()} | {:error, {module(), String.t()}}
 
         defp normalize_options(options) do
           locale = options[:locale] || unquote(backend).get_locale()
@@ -260,7 +260,7 @@ defmodule Cldr.List.Backend do
         end
 
         @spec verify_format(Locale.locale_name(), atom() | Cldr.List.Pattern.t()) ::
-          {:ok, atom()} | {:error, {module(), String.t()}}
+          {:ok, Cldr.List.Pattern.t()} | {:error, {module(), String.t()}}
 
         defp verify_format(_locale_name, %Cldr.List.Pattern{} = pattern) do
           {:ok, pattern}
